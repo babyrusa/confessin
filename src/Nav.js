@@ -26,11 +26,11 @@ export default class Nav extends Component {
           <div className="navbar-nav ml-auto">
             {userSession.isUserSignedIn() &&
               <React.Fragment>
-                <Link to={"/profile"} className="nav-item btn btn-lg" id="profile-feed">Profile</Link>
+                <Link to={"/profile"} className="nav-item btn btn-lg btn-primary" id="profile-feed">Profile</Link>
                 {/* <Link to={"/contact-us"} className="nav-item btn nav-showonphoneonly" id="profile-feed">Contact Us</Link> */}
 
                 <button
-                  className="nav-item btn btn-lg nav-showonphoneonly"
+                  className="nav-item btn btn-lg btn-primary nav-showonphoneonly"
                   id="signout-button"
                   onClick={handleSignOut.bind(this)}
                 >
@@ -40,8 +40,8 @@ export default class Nav extends Component {
             <button type="button" className="btn dropdown-toggle nav-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               More
             </button>
-            <div class="dropdown-menu">
-              {/* <Link to="/profile" class="dropdown-item" href="#"><i class="fas fa-user text-primary"></i>&nbsp;Profile</Link> */}
+            <div className="dropdown-menu">
+              <Link to="/profile" className="dropdown-item" href="#"><i className="fas fa-user text-primary"></i>&nbsp;Profile</Link>
               <Link to="/contact-us" className="dropdown-item" ><i className="fas fa-envelope text-primary"></i>&nbsp;Contact Us</Link>
               <Link to="/about-dcasso"><small className="dropdown-item">About Dcasso</small></Link>
               <div className="dropdown-divider"></div>
