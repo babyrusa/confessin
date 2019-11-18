@@ -15,12 +15,10 @@ export default class NewKonfession extends Component {
   }
   async addConfession(){
     const { userSession } = this.props
-    console.log(this.state.confession)
-    console.log("user name",userSession.loadUserData().username)
     const totalConf = await Konfession.count() + 1
     try {
       const konfession = new Konfession({
-        username: 'jessicaanhdao.id.blockstack',
+        username: userSession.loadUserData().username,
         text: this.state.confession,
         index: totalConf,
       })
@@ -39,7 +37,7 @@ export default class NewKonfession extends Component {
           <textarea
             id="newconfession-textarea"
             className="form-control"
-            maxLength="5"
+            maxLength="63206"
             rows="5"
             value = {this.state.confession}
             onChange = {this.onConfessionChange.bind(this)}

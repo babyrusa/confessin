@@ -14,7 +14,7 @@ export default class SingleKonfession extends Component {
     return(
       <div id="singlekonfession">
       <div>
-      <p>#{this.props.konfession.attrs.index}</p>
+      <p>Confession #{this.props.konfession.attrs.index}</p>
       <i class="fas fa-quote-left"></i>
       <h1>{this.props.konfession.attrs.text}</h1>
       <i class="fas fa-quote-right"></i>      

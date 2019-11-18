@@ -10,19 +10,31 @@ export default class KonfessionReaction extends Component {
   render(){
     return(
       <React.Fragment>
-      <div>
-        <button className="btn">
+      <div className="konfession-reaction-wrapper">
+        <div className="konfession-reaction">
+          <div>
           Virtue
-          👼🏻
+          </div>
+        <button className="btn-primary btn-circle">
+          😇
         </button>
-        <button className="btn ">
+        </div>
+        <div className="konfession-reaction">
+        <div>
           Sin
+          </div>
+        <button className="btn-primary btn-circle">
           😈
         </button>
-        <button className="btn ">
+        </div>
+        <div className="konfession-reaction">
+        <div>
           Deadly Sin
+          </div>
+        <button className="btn-primary btn-circle">
           💀
         </button>
+        </div>
       </div>
       </React.Fragment>
     )
