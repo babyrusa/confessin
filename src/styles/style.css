@@ -10,6 +10,9 @@ body {
   color: #504658;
   text-align: center;
 }
+p {
+  margin-bottom: 0px;
+}
 .hide {
   display: none;
 }
@@ -128,6 +131,8 @@ textarea {
 }
 .form-control {
   border-radius: 0px;
+  border: 1px solid #ff66b6;
+  /* box-shadow: 0 0 10px #ff66b6; */
 }
 .form-control:focus {
   outline: none !important;
@@ -142,7 +147,7 @@ textarea {
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
 }
-#newconfession-wrapper button {
+#newconfession-wrapper #add-confession-button {
   width: 100%;
 }
 
@@ -156,22 +161,36 @@ textarea {
 }
 
 /*--------- confession comment  --------- */
-#konfession-comment {
-  position: relative;
+#konfession-comment-wrapper {
+  width: 100%;
 }
-#konfession-comment input {
+#konfession-comment-wrapper div{
+  float: left;
+  clear: none;
+}
+#konfession-comment {
+  width: 70%;
+  
+  /* position: relative; */
+
+}
+#konfession-comment textarea {
   border-radius: 20px;
 }
-#konfession-comment input[type="text"] {
-  border: none;
-  width: 100%;
-  padding-right: 123px;
+#konfession-comment textarea[type="text"] {
+  /* border: none; */
+  /* width: 100%; */
+  /* padding-right: 123px; */
 }
-#konfession-comment button {
+#konfession-comment-wrapper .btn-emoji{
+  padding : 10px;
+  /* float: right; */
+}
+/* #konfession-comment button {
   position: absolute;
   right: 4px;
   top: 20px;
-}
+} */
 
 /*--------- confession reaction buttons  --------- */
 

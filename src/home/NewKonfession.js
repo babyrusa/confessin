@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Konfession from "../models/Konfession";
+import AddEmoji from "../shared/AddEmoji";
+import AddImage from "../shared/AddImage";
 
 export default class NewKonfession extends Component {
   constructor(props) {
@@ -11,6 +13,11 @@ export default class NewKonfession extends Component {
   onConfessionChange(e) {
     this.setState({
       confession : e.target.value
+    })
+  }
+  addEmoji(emoji){
+    this.setState({
+      confession : this.state.confession+emoji.native
     })
   }
   async addConfession(){
@@ -34,6 +41,7 @@ export default class NewKonfession extends Component {
     return (
       <React.Fragment>
         <div id="newconfession-wrapper">
+          
           <textarea
             id="newconfession-textarea"
             className="form-control"
@@ -43,7 +51,9 @@ export default class NewKonfession extends Component {
             onChange = {this.onConfessionChange.bind(this)}
           >
           </textarea>
-          <button className="btn btn-primary" onClick={this.addConfession.bind(this)}>Add Konfession</button>
+          <AddEmoji addEmoji = {this.addEmoji.bind(this)}/>
+          <AddImage addEmoji = {this.addEmoji.bind(this)}/>
+          <button className="btn btn-primary" id="add-confession-button" onClick={this.addConfession.bind(this)}>Add Konfession</button>
         </div>
       </React.Fragment>
     );

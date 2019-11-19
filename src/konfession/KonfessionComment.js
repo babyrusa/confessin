@@ -1,60 +1,65 @@
 import React, { Component } from "react";
-import { Smile } from "react-feather";
-import { Picker } from 'emoji-mart';
-import 'emoji-mart/css/emoji-mart.css'
+import AddEmoji from "../shared/AddEmoji";
+import AddImage from "../shared/AddImage";
+import Comment from "../models/Comment";
+import { User } from "radiks/lib";
 
 export default class KonfessionComment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment : '',
-      showEmojiPicker : false,
-
+      comment: ""
     };
   }
 
-  toggleEmojiPicker() {
+  addEmoji(emoji) {
     this.setState({
-      showEmojiPicker : !this.state.showEmojiPicker
-    })
+      comment: this.state.comment + emoji.native
+    });
   }
-
-  addEmoji(emoji){
+  onCommentChange(e) {
     this.setState({
-      comment : this.state.comment+emoji.native
-    })
+      comment: e.target.value
+    });
   }
-  onCommentChange(e){
-    this.setState({
-      comment : e.target.value
-    })
-  }
-  postComment(e){
-    if (e.key === 'Enter') {
-      console.log(this.state.comment)
+  async postComment(e) {
+    if (e.key === "Enter") {
+      try {
+        console.log(this.state.comment);
+        const newComment = new Comment({
+          username: User.currentUser()._id,
+          konfessionId: this.props.konfession.attrs._id,
+          text: this.state.comment
+        });
+        await newComment.save();
+        this.props.fetchComments();
+        this.setState({
+          comment: ""
+        });
+      } catch (e) {
+        alert("cannot post comment atm");
+        console.log(e);
+      }
     }
   }
   render() {
     return (
-      <div id="konfession-comment">
-        10comments
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Drop your thoughts..."
-          value = {this.state.comment}
-          onChange = {this.onCommentChange.bind(this)}
-          onKeyDown = {this.postComment.bind(this)}
-        />
-        <button type="button" className="btn toggle-emoji"
-        data-toggle="tooltip" title="Insert an emoji"
-        onClick={this.toggleEmojiPicker.bind(this)}>
-          <Smile />
-        </button>
-        { this.state.showEmojiPicker && 
-        <Picker set="emojione" onSelect={this.addEmoji.bind(this)} />
-
-        }
+      <div id="konfession-comment-wrapper">
+        <div id="konfession-comment">
+          <textarea
+            type="text"
+            class="form-control"
+            placeholder="Drop your thoughts..."
+            value={this.state.comment}
+            onChange={this.onCommentChange.bind(this)}
+            onKeyDown={this.postComment.bind(this)}
+            // style={{height : '10px'}}
+          />
+        </div>
+        <div>
+          <AddEmoji addEmoji={this.addEmoji.bind(this)} size="20" />
+          <AddImage addEmoji={this.addEmoji.bind(this)} size="20" />
+        </div>
       </div>
     );
   }
