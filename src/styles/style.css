@@ -121,11 +121,8 @@ textarea {
   color: #000;
 }
 
-/*--------- CONFESSION textarea--------- */
-#newconfession-textarea {
-  padding: 5px;
-  width: 100%;
-}
+/*--------- new confession CONFESSION textarea--------- */
+
 textarea {
   resize: none;
 }
@@ -141,8 +138,11 @@ textarea {
   /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
 }
 
-/*--------- new confession --------- */
-
+/*---------  --------- */
+#newconfession-textarea textarea {
+  padding: 5px;
+  width: 100%;
+}
 #newconfession-wrapper {
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
@@ -150,6 +150,51 @@ textarea {
 #newconfession-wrapper #add-confession-button {
   width: 100%;
 }
+#newconfession-textarea{
+  position: relative;
+}
+.topic {
+  position: absolute;
+  bottom : 5px;
+  border : 1px solid #ff66b6
+}
+/* react textarea auto complete */
+
+.rta {
+  position: relative;
+  border-left: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.rta__autocomplete  {
+  position: absolute;
+  width: 300px;
+  background-color: rgb(65, 4, 4);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.rta__entity--selected {
+  color : #ff66b6;
+  background : white;
+
+}
+.rta__autocomplete ul {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.rta__autocomplete li {
+  margin-bottom: 5px;
+  padding: 3px 20px;
+  cursor: pointer;
+}
+
+/* .rta__autocomplete li:hover {
+  background-color: skyblue;
+} */
+
 
 /*--------- individual confession --------- */
 
@@ -164,15 +209,14 @@ textarea {
 #konfession-comment-wrapper {
   width: 100%;
 }
-#konfession-comment-wrapper div{
+#konfession-comment-wrapper div {
   float: left;
   clear: none;
 }
 #konfession-comment {
   width: 70%;
-  
-  /* position: relative; */
 
+  /* position: relative; */
 }
 #konfession-comment textarea {
   border-radius: 20px;
@@ -182,8 +226,8 @@ textarea {
   /* width: 100%; */
   /* padding-right: 123px; */
 }
-#konfession-comment-wrapper .btn-emoji{
-  padding : 10px;
+#konfession-comment-wrapper .btn-emoji {
+  padding: 10px;
   /* float: right; */
 }
 /* #konfession-comment button {

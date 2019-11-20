@@ -58,7 +58,6 @@ export default class KonfessionComment extends Component {
         </div>
         <div>
           <AddEmoji addEmoji={this.addEmoji.bind(this)} size="20" />
-          <AddImage addEmoji={this.addEmoji.bind(this)} size="20" />
         </div>
       </div>
     );
