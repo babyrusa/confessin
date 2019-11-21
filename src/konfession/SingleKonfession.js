@@ -4,6 +4,7 @@ import KonfessionReaction from "./KonfessionReaction";
 import KonfessionComment from "./KonfessionComment";
 import TimeStamp from './timestamp.js';
 import KonfessionCommentSection from "./KonfessionCommentSection";
+import KonfessionHashtag from "./KonfessionHashtag";
 
 export default class SingleKonfession extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class SingleKonfession extends Component {
       <h1>{this.props.konfession.attrs.text}</h1>
       <i className="fas fa-quote-right"></i>      
       </div>
+      <KonfessionHashtag konfession = {this.props.konfession}/>
       <KonfessionReaction konfession = {this.props.konfession}/>
       <KonfessionCommentSection konfession = {this.props.konfession}/>
       </div>

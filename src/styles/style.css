@@ -250,8 +250,16 @@ textarea {
 } */
 
 .btn-circle {
-  background-color: #ff66b6;
+  /* background-color: #ff66b6; */
   width: 60px;
   height: 60px;
   border-radius: 50%;
+}
+.btn-reaction {
+  background-color: white;
+  border: 5px solid #ff66b6;
+}
+.btn-selected{
+  background-color: #ff66b6;
+  /* border: 3px solid white; */
 }

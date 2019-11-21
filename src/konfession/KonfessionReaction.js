@@ -1,108 +1,144 @@
 import React, { Component } from "react";
 import Reaction from "../models/Reaction";
+import { User } from "radiks/lib";
 
 export default class KonfessionReaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      konfession : {
-        attrs : {
-          _id : '',
-          username: '',
-          index : '',
-          createdAt : '',
-          topic : []
-        }
-      },
       virtueCount: 0,
       sinCount: 0,
       deadlySinCount: 0,
-    }
+      selfReaction: {
+        attrs: {
+          _id: "",
+          type: "",
+          username: ""
+        }
+      },
+      decrypt: true //default as true, decrypt=false when user not logged in
+    };
   }
-  componentDidMount(){
-    this.setState({
-      konfession : this.props.konfession
-    }, () => this.fetchReactions())
+  componentDidMount() {
+    this.fetchReactions();
   }
-  async fetchReactions(){
-    let _reactions = await Reaction.fetchList({ konfessionId : this.state.konfession.attrs._id} , { decrypt: false })
-    let _virtueCount = 0, _sinCount = 0, _deadlySinCount = 0;
-
-    _reactions.forEach(reaction => {
-      if (reaction.attrs.type === 'virtue') {
+  async fetchReactions() {
+    let _reactions = await Reaction.fetchList(
+      { konfessionId: this.props.konfession.attrs._id },
+      { decrypt: this.state.decrypt }
+    );
+    let _virtueCount = 0,
+      _sinCount = 0,
+      _deadlySinCount = 0;
+    for (let i = 0; i < _reactions.length; i++) {
+      if (_reactions[i].attrs.type === "virtue") {
         _virtueCount += 1;
-      } else if (reaction.attrs.type === 'sin') {
+      } else if (_reactions[i].attrs.type === "sin") {
         _sinCount += 1;
-      } else if (reaction.attrs.type === 'deadly sin') {
+      } else if (_reactions[i].attrs.type === "deadly sin") {
         _deadlySinCount += 1;
       }
-    })
+      this.getSelfReaction(_reactions[i]);
+    }
     this.setState({
-      virtueCount : _virtueCount,
-      sinCount : _sinCount,
-      deadlySinCount : _deadlySinCount
-    })
+      virtueCount: _virtueCount,
+      sinCount: _sinCount,
+      deadlySinCount: _deadlySinCount
+    });
   }
-
+  getSelfReaction(reaction) {
+    console.log(reaction);
+    if (reaction.attrs.username === User.currentUser()._id) {
+      this.setState({
+        selfReaction: reaction
+      });
+    }
+  }
   /**
    * main function that save reactions to DB
-   * @param {*} reactionType 
+   * @param {*} reactionType
    */
   async saveReaction(reactionType) {
-    const {userSession} = this.props
-    let _reaction = new Reaction({
-      konfessionId : this.state.konfession.attrs._id,
-      username: userSession.loadUserData().username,
-      type: `${reactionType}`,
-    });
-    await _reaction.save();
-    this.updateSketchReactions();
+    const { userSession } = this.props;
+    if (this.state.selfReaction.attrs.type !== "") {
+      console.log("have liked")
+      if (reactionType !== this.state.selfReaction.attrs.type) {
+        console.log("same type")
+
+        this.state.selfReaction.update({
+          type: reactionType
+        });
+        await this.state.selfReaction.save();
+      } else {
+        await this.state.selfReaction.destroy();
+        this.setState({
+          selfReaction : {attrs: {
+            _id: "",
+            type: "",
+            username: ""
+          }}
+        })
+      }
+    } else {
+      let _reaction = new Reaction({
+        konfessionId: this.props.konfession.attrs._id,
+        username: User.currentUser()._id,
+        type: `${reactionType}`
+      });
+      await _reaction.save();
+    }
+    this.fetchReactions();
   }
 
-  async updateSketchReactions() {
-    //first check if this konfession belongs to this user
-    // let _sketch = await Sketch.findById(this.state.sketch.attrs._id);
-    // _sketch.update({
-    //   reactionCount: this.state.reactionCount,
-    //   loveCount: this.state.loveCount,
-    //   laughCount: this.state.laughCount,
-    //   poopCount: this.state.poopCount,
-    // });
-    // await _sketch.save();
-  }
-  render(){
-    return(
+  render() {
+    return (
       <React.Fragment>
-      <div className="konfession-reaction-wrapper">
-        <div className="konfession-reaction">
-          <div>
-          {this.state.virtueCount}
+        <div className="konfession-reaction-wrapper">
+          <div className="konfession-reaction">
+            <div>{this.state.virtueCount}</div>
+            <button
+              className={
+                "btn-primary btn-reaction btn-circle " +
+                (this.state.selfReaction.attrs.type === "virtue" ? "btn-selected" : "")
+              }
+              data-toggle="tooltip"
+              title="Virtue"
+              onClick={this.saveReaction.bind(this, "virtue")}
+            >
+              😇
+            </button>
           </div>
-        <button className="btn-primary btn-circle"
-        data-toggle="tooltip" title="Virtue">
-          😇
-        </button>
-        </div>
-        <div className="konfession-reaction">
-        <div>
-        {this.state.sinCount}
+          <div className="konfession-reaction">
+            <div>{this.state.sinCount}</div>
+            <button
+              className={
+                "btn-primary btn-reaction btn-circle " +
+                (this.state.selfReaction.attrs.type === "sin" ? "btn-selected" : "")
+              }
+              data-toggle="tooltip"
+              title="Sin"
+              onClick={this.saveReaction.bind(this, "sin")}
+            >
+              😈
+            </button>
           </div>
-        <button className="btn-primary btn-circle" 
-        data-toggle="tooltip" title="Sin">
-          😈
-        </button>
-        </div>
-        <div className="konfession-reaction">
-        <div>
-        {this.state.deadlySinCount}
+          <div className="konfession-reaction">
+            <div>{this.state.deadlySinCount}</div>
+            <button
+              className={
+                "btn-primary btn-reaction btn-circle " +
+                (this.state.selfReaction.attrs.type === "deadly sin" ? "btn-selected" : "")
+              }
+              data-toggle="tooltip"
+              title="Deadly Sin"
+              onClick={this.saveReaction.bind(this, "deadly sin")}
+
+            >
+              💀
+            </button>
           </div>
-        <button className="btn-primary btn-circle"
-        data-toggle="tooltip" title="Deadly Sin">
-          💀
-        </button>
         </div>
-      </div>
       </React.Fragment>
-    )
+    );
   }
 }
