@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
   Person, lookupProfile,
 } from 'blockstack';
+import SearchInput from './SearchInput';
 
 export default class Nav extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ export default class Nav extends Component {
           iKonfess
           {/* <img src="/images/Dcasso-word-white-border.png" className="logo-frame" width="100" height="100" alt="Dcasso logo" /> */}
         </Link>
+        <SearchInput/>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ml-auto">
             {userSession.isUserSignedIn() &&

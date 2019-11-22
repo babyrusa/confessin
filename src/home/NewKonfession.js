@@ -85,6 +85,9 @@ export default class NewKonfession extends Component {
   render() {
     return (
       <React.Fragment>
+      <div className="row">
+        <div className="col-md-10 col-lg-10 col-xl-6 mx-auto">
+
         <div id="newconfession-wrapper">
           <div
             id="newconfession-textarea"
@@ -134,6 +137,8 @@ export default class NewKonfession extends Component {
           >
             Add Konfession
           </button>
+        </div>
+        </div>
         </div>
       </React.Fragment>
     );

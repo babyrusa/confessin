@@ -210,21 +210,32 @@ textarea {
   width: 100%;
 }
 #konfession-comment-wrapper div {
-  float: left;
-  clear: none;
 }
 #konfession-comment {
-  width: 70%;
-
+  width: 500px;
   /* position: relative; */
 }
 #konfession-comment textarea {
   border-radius: 20px;
+  min-height: 40px;
+  overflow: hidden; 
+  display: block;
+  transition: height 0.2s ease;
 }
 #konfession-comment textarea[type="text"] {
   /* border: none; */
   /* width: 100%; */
   /* padding-right: 123px; */
+}
+.textarea--ghost {
+  top: 0;
+  position: absolute;
+  width: 500px;
+  opacity: 0;
+  display: block;
+  white-space: pre-wrap;
+  word-wrap: break-word;  
+  visibility: hidden;
 }
 #konfession-comment-wrapper .btn-emoji {
   padding: 10px;
@@ -236,6 +247,17 @@ textarea {
   top: 20px;
 } */
 
+#comment-section{
+  text-align: left;
+}
+.single-comment{
+  padding: 5px;
+  border-top: 1px solid #ff66b6;
+  /* box-shadow: 0 0 10px 0 #ff66b6; */
+
+  /* border-bottom: 1px solid #ff66b6; */
+
+}
 /*--------- confession reaction buttons  --------- */
 
 .konfession-reaction {
@@ -257,9 +279,24 @@ textarea {
 }
 .btn-reaction {
   background-color: white;
-  border: 5px solid #ff66b6;
+  border: 5px solid #fff;
+  font-size: 30px;
 }
 .btn-selected{
   background-color: #ff66b6;
-  /* border: 3px solid white; */
+  border: 3px solid #ff66b6;
+}
+
+/*--------- search input  --------- */
+#filter-wrapper{
+  position: relative;
+  width : 500px;
+}
+#filterHashtag{
+  z-index: 1;
+  color : #504658;
+  background: white;
+  position: absolute;
+  padding : 5px;
+  text-align: left;
 }

@@ -41,10 +41,11 @@ export default class KonfessionCommentSection extends Component {
       <React.Fragment>
         <KonfessionComment konfession={this.props.konfession}
         fetchComments = {this.fetchComments.bind(this)} />
-        <div id="konfession-comment">
+        view all comments...
+        <div id="comment-section">
           {this.state.comments.map(comment => {
             return (
-              <div>
+              <div className="single-comment">
                 <div>
                 <p>{comment.attrs.text}</p>
                 </div>

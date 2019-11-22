@@ -6,6 +6,7 @@ import { UserSession, AppConfig, config } from "blockstack";
 import Nav from "./Nav.js";
 import { Route, Switch } from "react-router-dom";
 import Home from "./home/Home.js";
+import KonfessionFeed from "./home/KonfessionFeed.js";
 
 config.logLevel = "none";
 
@@ -53,17 +54,8 @@ export default class App extends Component {
                 handleSignOut={this.handleSignOut}
               />
               <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={props => (
-                    <Home {...props} userSession={userSession} />
-                  )}
-                />
-                <Route
-                  exact
-                  path="/profile"
-                  render={props => (
+                <Route exact path="/" render={props => (<Home {...props} userSession={userSession} />)}/>
+                <Route exact path="/profile" render={props => (
                     <Profile
                       {...props}
                       handleSignOut={this.handleSignOut}
@@ -71,6 +63,8 @@ export default class App extends Component {
                     />
                   )}
                 />
+                <Route exact path="/hashtag/:hashtagKey" render={props => (<KonfessionFeed  {...props} userSession={userSession} />)}/>
+
               </Switch>
             </React.Fragment>
           )}

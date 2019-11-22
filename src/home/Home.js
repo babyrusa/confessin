@@ -12,15 +12,11 @@ export default class Home extends Component {
   }
   render() {
     return (
-      // <React.Fragment>
-      <div className="row">
-        <div className="col-6 mx-auto">
+      <React.Fragment>
         <NewKonfession userSession = {this.props.userSession} />
         <KonfessionFeed userSession = {this.props.userSession} />
 
-      </div>
-      </div >
-      // </React.Fragment>
+     </React.Fragment>
     )
   }
 }

@@ -25,7 +25,7 @@ export default class KonfessionHashtag extends Component {
     const {konfession} = this.props
     return(
       this.state.hashtags.map(hashtag => {
-        return <Link to='/'>#{hashtag.attrs.text}</Link>
+        return <Link to={`/hashtag/${hashtag.attrs.text}`}>#{hashtag.attrs.text}</Link>
       })
     )
   }
