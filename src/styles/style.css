@@ -2,6 +2,7 @@
 /* a,a:focus,a:hover{color:#000272;} */
 html,
 body {
+  font-family: "Questrial", sans-serif;
   height: 100%;
   background-color: #f0decb;
   color: #000272;
@@ -17,7 +18,13 @@ p {
   display: none;
 }
 /* .landing-heading{font-family:'Source Code Pro',monospace;font-weight:400;} */
+.ikonfess {
+  color : #ff66b6;
+}
+.ikonfess-dark {
+  color : #b3276f;
 
+}
 /* Buttons */
 .btn {
   border-radius: 0px;
@@ -48,14 +55,21 @@ p {
   color: #212529;
 }
 .btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active {
+.btn-primary:focus{
   color: #212529;
-  border: 1px solid #ff66b6;
-  background-color: #ff66b6;
-  transform: translateY(-1px);
+  border: 1px solid #ff66b6 !important;
+  background-color: #ff66b6 !important;
+  transform: translateY(-1px) ;
   box-shadow: 0 3px 5px hsla(0, 0%, 0%, 0.2);
 }
+.btn-primary:active {
+  color: #212529 !important;
+  border: 1px solid #ff3fa2 !important;
+  background-color: #ff3fa2 !important;
+  transform: translateY(-1px) ;
+  box-shadow: 0 3px 5px hsla(0, 0%, 0%, 0.2);
+}
+
 /* .btn-primary:hover,.btn-primary:focus,.btn-primary:active{color:#fff;border:1px solid #3700FF;background-color:#3700FF; transform: translateY(-1px); box-shadow: 0 3px 5px hsla(0, 0%, 0%, .2);} */
 
 .navbar {
@@ -64,7 +78,9 @@ p {
   -moz-border-radius: 0;
   border-radius: 0;
 }
-
+.notification-dropdown::after {
+  content: none;
+}
 /* Avatar */
 .avatar {
   width: 100px;
@@ -198,11 +214,14 @@ textarea {
 
 /*--------- individual confession --------- */
 
-#singlekonfession {
+.singlekonfession {
   background-color: rgba(255, 255, 255, 1);
   margin: 5px;
   padding: 5px;
   /* ffb5b5 */
+}
+.editKonfession{
+
 }
 
 /*--------- confession comment  --------- */
@@ -212,7 +231,7 @@ textarea {
 #konfession-comment-wrapper div {
 }
 #konfession-comment {
-  width: 500px;
+  width: 80%;
   /* position: relative; */
 }
 #konfession-comment textarea {
@@ -220,7 +239,7 @@ textarea {
   min-height: 40px;
   overflow: hidden; 
   display: block;
-  transition: height 0.2s ease;
+  transition: height 0.5s ease;
 }
 #konfession-comment textarea[type="text"] {
   /* border: none; */
@@ -230,8 +249,10 @@ textarea {
 .textarea--ghost {
   top: 0;
   position: absolute;
-  width: 500px;
-  opacity: 0;
+  border-radius: 20px;
+  width: 480px;
+  text-align: left;
+  opacity: 0.2;
   display: block;
   white-space: pre-wrap;
   word-wrap: break-word;  
@@ -249,22 +270,31 @@ textarea {
 
 #comment-section{
   text-align: left;
+  padding: 0 10px 0 10px;
 }
 .single-comment{
-  padding: 5px;
+  padding: 15px 20px 15px 20px;
   border-top: 1px solid #ff66b6;
   /* box-shadow: 0 0 10px 0 #ff66b6; */
-
-  /* border-bottom: 1px solid #ff66b6; */
+}
+#loadmore{
+  cursor: pointer;
+  text-align: left;
+  padding: 0px 20px 5px 20px;
 
 }
 /*--------- confession reaction buttons  --------- */
 
 .konfession-reaction {
   float: left;
+  margin: 0 auto;
+  padding: 10px;
+
 }
 .konfession-reaction-wrapper {
-  display: table-cell;
+  display: inline-block;
+  /* width: 100%; */
+  /* text-align: center; */
 }
 /* .btn-reaction {
   border: 0px;
@@ -299,4 +329,28 @@ textarea {
   position: absolute;
   padding : 5px;
   text-align: left;
+}
+
+/**more button*/
+.btn-more{
+  cursor: pointer;
+  color: hsla(0, 0%, 0%, .2);
+  position: absolute;
+  right: 20px;
+  top : 0px;
+}
+
+.btn-more:hover{
+  color : #ff66b6
+  
+}
+.dropdown-item {
+  cursor: pointer;
+}
+.dropdown-menu {
+  color : #504658;
+  border: 1px solid #ff66b6;
+  border-radius: 0px;
+  box-shadow: 0 0 5px #ff66b6;
+
 }

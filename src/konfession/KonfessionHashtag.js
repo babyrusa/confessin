@@ -13,6 +13,11 @@ export default class KonfessionHashtag extends Component {
   componentDidMount(){
     this.fetchHashtags()
   }
+  componentDidUpdate(prevProps){
+    if (prevProps.konfession !== this.props.konfession) {
+      this.fetchHashtags()
+    }
+  }
 
   async fetchHashtags(){
     const _hashtags = await Hashtag.fetchList({konfessionId : this.props.konfession.attrs._id}, { decrypt: false })
@@ -24,9 +29,12 @@ export default class KonfessionHashtag extends Component {
   render(){
     const {konfession} = this.props
     return(
-      this.state.hashtags.map(hashtag => {
-        return <Link to={`/hashtag/${hashtag.attrs.text}`}>#{hashtag.attrs.text}</Link>
-      })
+      <div>
+      {this.state.hashtags.map(hashtag => {
+        return <Link to={`/hashtag/${hashtag.attrs.text}`}
+        key={hashtag.attrs._id}>#{hashtag.attrs.text}</Link>
+      })}
+      </div>
     )
   }
 }

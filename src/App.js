@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import Profile from "./Profile.js";
+import Profile from "./profile/Profile.js";
 import Signin from "./Signin.js";
 import { User, configure, getConfig } from "radiks";
 import { UserSession, AppConfig, config } from "blockstack";
-import Nav from "./Nav.js";
+import Nav from "./nav/Nav.js";
 import { Route, Switch } from "react-router-dom";
 import Home from "./home/Home.js";
 import KonfessionFeed from "./home/KonfessionFeed.js";
+import SingleKonfession from "./konfession/SingleKonfession.js";
 
 config.logLevel = "none";
 
@@ -42,12 +43,12 @@ export default class App extends Component {
     return (
       <div className="">
         <div className="">
-          {!userSession.isUserSignedIn() ? (
+          {/* {!userSession.isUserSignedIn() ? (
             <Signin
               userSession={userSession}
               handleSignIn={this.handleSignIn}
             />
-          ) : (
+          ) : ( */}
             <React.Fragment>
               <Nav
                 userSession={userSession}
@@ -64,10 +65,10 @@ export default class App extends Component {
                   )}
                 />
                 <Route exact path="/hashtag/:hashtagKey" render={props => (<KonfessionFeed  {...props} userSession={userSession} />)}/>
-
+                <Route exact path="/konfession/:konfessionId" render={props => (<SingleKonfession  {...props} userSession={userSession} />)}/>
               </Switch>
             </React.Fragment>
-          )}
+          {/* )} */}
         </div>
       </div>
     );

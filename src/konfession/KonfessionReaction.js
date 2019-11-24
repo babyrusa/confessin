@@ -22,14 +22,20 @@ export default class KonfessionReaction extends Component {
   componentDidMount() {
     this.fetchReactions();
   }
+  componentDidUpdate(prevProps){
+    if (prevProps.konfession !== this.props.konfession) {
+      this.fetchReactions();
+    }
+  }
   async fetchReactions() {
     let _reactions = await Reaction.fetchList(
       { konfessionId: this.props.konfession.attrs._id },
-      { decrypt: this.state.decrypt }
+      { decrypt: this.props.userSession.isUserSignedIn() }
     );
     let _virtueCount = 0,
       _sinCount = 0,
       _deadlySinCount = 0;
+      // console.log(_reactions)
     for (let i = 0; i < _reactions.length; i++) {
       if (_reactions[i].attrs.type === "virtue") {
         _virtueCount += 1;
@@ -47,12 +53,27 @@ export default class KonfessionReaction extends Component {
     });
   }
   getSelfReaction(reaction) {
-    console.log(reaction);
-    if (reaction.attrs.username === User.currentUser()._id) {
+    // console.log(reaction);
+    if (this.props.userSession.isUserSignedIn() && reaction.attrs.username === this.props.userSession.loadUserData().username ) {
       this.setState({
         selfReaction: reaction
       });
+    } else {
+      this.resetSelfReaction()
     }
+    // console.log(this.state.selfReaction.attrs.type)
+
+  }
+  resetSelfReaction() {
+    this.setState({
+      selfReaction: {
+        attrs: {
+          _id: "",
+          type: "",
+          username: ""
+        }
+      }
+    });
   }
   /**
    * main function that save reactions to DB
@@ -71,13 +92,7 @@ export default class KonfessionReaction extends Component {
         await this.state.selfReaction.save();
       } else {
         await this.state.selfReaction.destroy();
-        this.setState({
-          selfReaction : {attrs: {
-            _id: "",
-            type: "",
-            username: ""
-          }}
-        })
+        this.resetSelfReaction()
       }
     } else {
       let _reaction = new Reaction({
@@ -93,7 +108,7 @@ export default class KonfessionReaction extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="konfession-reaction-wrapper">
+        <div className="konfession-reaction-wrapper ikonfess">
           <div className="konfession-reaction">
             <div>{this.state.virtueCount}</div>
             <button
@@ -105,7 +120,7 @@ export default class KonfessionReaction extends Component {
               title="Virtue"
               onClick={this.saveReaction.bind(this, "virtue")}
             >
-              😇
+              👼
             </button>
           </div>
           <div className="konfession-reaction">

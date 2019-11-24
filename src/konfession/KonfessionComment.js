@@ -3,22 +3,29 @@ import AddEmoji from "../shared/AddEmoji";
 import AddImage from "../shared/AddImage";
 import Comment from "../models/Comment";
 import { User } from "radiks/lib";
+var animals = require('../animals.json'); 
+
 const DEFAULT_HEIGHT = 40;
 
 export default class KonfessionComment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ""
+      comment: "",
+      anonymousIdentity : ""
     };
   }
 
   componentDidMount(){
     this.setFilledTextareaHeight()
+    if (this.props.userSession.isUserSignedIn()) {
+      this.haveCommentedBefore()
+    }
+  }
+  componentDidUpdate(){
   }
   setFilledTextareaHeight() {
       const element = this.ghost;
-
       this.setState({
         height: element.clientHeight,
       });
@@ -33,12 +40,30 @@ export default class KonfessionComment extends Component {
       comment: e.target.value
     });
   }
+  randomAnimalPicker(){
+    return animals[Math.floor(Math.random() * animals.length)];
+    //make sure this animal hasnt commented before
+  }
+  async haveCommentedBefore() {
+    const _ownList = await Comment.fetchOwnList({konfessionId : this.props.konfession.attrs._id, sort: '-createdAt'})
+    if (_ownList.length > 0) {
+      this.setState({
+        anonymousIdentity : _ownList[0].attrs.anonymousIdentity
+      })
+    } else {
+      this.setState({
+        anonymousIdentity : ""
+      })
+    }
+  }
   async postComment(e) {
     this.setFilledTextareaHeight()
+
     if (e.key === "Enter") {
+      const _randomAnimal = this.state.anonymousIdentity === "" ? ("Anonymous "+this.randomAnimalPicker()) : this.state.anonymousIdentity
       try {
-        console.log(this.state.comment);
         const newComment = new Comment({
+          anonymousIdentity : _randomAnimal,
           username: User.currentUser()._id,
           konfessionId: this.props.konfession.attrs._id,
           text: this.state.comment
@@ -74,7 +99,7 @@ export default class KonfessionComment extends Component {
           <textarea
             id="konfession-comment-textarea"
             type="text"
-            class="form-control"
+            className="form-control"
             placeholder="Drop your thoughts..."
             value={this.state.comment}
             style={{ height,
