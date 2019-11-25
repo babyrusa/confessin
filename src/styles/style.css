@@ -77,6 +77,7 @@ p {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
+  padding : 0px;
 }
 .notification-dropdown::after {
   content: none;
@@ -229,7 +230,10 @@ textarea {
 .singlekonfession {
   background-color: rgba(255, 255, 255, 1);
   margin: 5px;
-  padding: 5px;
+  padding: 28px;
+  /* box-shadow: #ff66b6; */
+  box-shadow: 0 0 20px  #ff66b6;
+
   /* ffb5b5 */
 }
 .editKonfession{
