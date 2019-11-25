@@ -60,6 +60,7 @@ export default class KonfessionComment extends Component {
     this.setFilledTextareaHeight()
 
     if (e.key === "Enter") {
+      e.preventDefault()
       const _randomAnimal = this.state.anonymousIdentity === "" ? ("Anonymous "+this.randomAnimalPicker()) : this.state.anonymousIdentity
       try {
         const newComment = new Comment({
@@ -94,7 +95,7 @@ export default class KonfessionComment extends Component {
     const isOneLine = this.state.height <= DEFAULT_HEIGHT;
     const { height, value } = this.state;
     return (
-      <div id="konfession-comment-wrapper">
+      <div id="konfession-comment-wrapper" style={{position:"relative"}}>
         <div id="konfession-comment">
           <textarea
             id="konfession-comment-textarea"
@@ -112,7 +113,7 @@ export default class KonfessionComment extends Component {
           />
         </div>
         {this.getGhostField()}
-        <div>
+        <div style={{position:"absolute" , top :"0", right : "0"}}>
           <AddEmoji addEmoji={this.addEmoji.bind(this)} size="20" />
         </div>
       </div>

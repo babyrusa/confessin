@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TimeStamp from "./timestamp.js";
+import TimeStamp from "../shared/timestamp.js";
 import Comment from "../models/Comment.js";
 import KonfessionComment from "./KonfessionComment.js";
 import KonfessionCommentEditDelete from "./KonfessionCommentEditDelete.js";

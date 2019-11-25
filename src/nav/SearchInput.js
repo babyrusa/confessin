@@ -28,7 +28,7 @@ export default class SearchInput extends Component {
   render(){
     return(
       <React.Fragment>
-      <div className="nav-link" id="filter-wrapper">
+      <div className="collapse navbar-collapse nav-link" id="filter-wrapper">
         <input id="filterByPrompt" type="text" className="form-control nav-filter" 
         style={{fontFamily:'Arial, FontAwesome'}} placeholder="&#xF002; Filter Konfessions by Hashtags"
         value= {this.state.hashtag} onChange={this.onChangeHandler.bind(this)}/>

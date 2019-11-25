@@ -81,6 +81,18 @@ p {
 .notification-dropdown::after {
   content: none;
 }
+.notification-wrapper.dropdown-menu {
+  padding : 0px;
+}
+.notification-wrapper .dropdown-item {
+  padding : 20px;
+}
+.noti-unread {
+  background-color: #f8cbe3;
+}
+.navbar-toggler {
+  border : none;
+}
 /* Avatar */
 .avatar {
   width: 100px;

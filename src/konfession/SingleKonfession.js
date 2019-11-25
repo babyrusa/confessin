@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Konfession from "../models/Konfession";
 import KonfessionReaction from "./KonfessionReaction";
 import KonfessionComment from "./KonfessionComment";
-import TimeStamp from "./timestamp.js";
+import TimeStamp from "../shared/timestamp.js";
 import KonfessionCommentSection from "./KonfessionCommentSection";
 import KonfessionHashtag from "./KonfessionHashtag";
 import KonfessionMoreButton from "./KonfessionMoreButton";

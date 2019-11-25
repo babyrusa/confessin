@@ -4,7 +4,7 @@ import {
   Person, lookupProfile,
 } from 'blockstack';
 import SearchInput from './SearchInput';
-import Notification from './Notification';
+import NotificationButton from './NotificationButton';
 
 export default class Nav extends Component {
   constructor(props) {
@@ -22,12 +22,14 @@ export default class Nav extends Component {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style
       justify-content-md-center justify-content-end">
         <Link to="/" className="navbar-brand navbar-brand-margin">
-          iKonfess
-          {/* <img src="/images/Dcasso-word-white-border.png" className="logo-frame" width="100" height="100" alt="Dcasso logo" /> */}
+        <img src="/images/confessin-small2.png" className="logo-frame" width="50" height="50" alt="ConfesSin logo" />
+          ConfesSin
         </Link>
         <SearchInput/>
-        <Notification/>
-        
+        <NotificationButton userSession = {this.props.userSession}/>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#filter-wrapper" aria-controls="filter-wrapper" aria-expanded="false" aria-label="Toggle navigation">
+        <i className="fas fa-search"></i>
+                </button>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>

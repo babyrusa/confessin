@@ -56,6 +56,8 @@ export default class App extends Component {
               />
               <Switch>
                 <Route exact path="/" render={props => (<Home {...props} userSession={userSession} />)}/>
+                <Route exact path="/signin" render={props => (<Signin {...props} userSession={userSession}  handleSignIn={ this.handleSignIn }/>)}/>
+                
                 <Route exact path="/profile" render={props => (
                     <Profile
                       {...props}
