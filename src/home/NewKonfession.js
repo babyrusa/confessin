@@ -5,6 +5,8 @@ import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
 import { Picker, emojiIndex } from "emoji-mart";
 import "@webscopeio/react-textarea-autocomplete/style.css";
 import Hashtag from "../models/Hashtag";
+import CreatableSelect from "react-select/creatable";
+import AsyncCreatableSelect from "react-select/async-creatable";
 
 export default class NewKonfession extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ export default class NewKonfession extends Component {
       confession: "",
       topic: "",
       topics: [],
-      isButtonLoading: false
+      isButtonLoading: false,
+      isLoading: false
     };
   }
   onConfessionChange(e) {
@@ -27,7 +30,6 @@ export default class NewKonfession extends Component {
       confession: this.state.confession + emoji.native
     });
   }
-
   onTopicsChange(e) {
     e.target.value = e.target.value.trim();
     console.log(e.target.value);
@@ -36,6 +38,21 @@ export default class NewKonfession extends Component {
         topic: e.target.value
       });
     }
+  }
+  handleChange(newValue, actionMeta) {
+    console.group("Value Changed");
+    console.log(newValue);
+    console.log(`action: ${actionMeta.action}`);
+    console.groupEnd();
+    this.setState({ value: newValue });
+    this.setState({ isLoading: true });
+  }
+  handleCreate(e) {}
+  async promiseOptions(e){
+    // console.log(typeof Hashtag.fetchList({      text: { $regex: e }
+    // }))
+    return Hashtag.fetchList({      text: { $regex: e }
+    })
   }
   addTopic(e) {
     if (e.key === "Enter" && this.state.topic !== "") {
@@ -87,62 +104,79 @@ export default class NewKonfession extends Component {
   }
 
   render() {
+    const colourOptions = [
+      { label: "blue", value: "blue" },
+      { label: "pink", value: "pink" },
+      { label: "white", value: "white" }
+    ];
+    const { isLoading } = this.state;
     return (
       <React.Fragment>
         {/* <div className="row"> */}
-          {/* <div className="col-md-10 col-lg-10 col-xl-6 mx-auto"> */}
-            <div id="newconfession-wrapper">
-              <div id="newconfession-textarea">
-                <textarea
-                  className="form-control"
-                  maxLength="63206"
-                  rows="5"
-                  value={this.state.confession}
-                  onChange={this.onConfessionChange.bind(this)}
-                  placeholder="Konfess here, don't worry, noone knows your identity but you"
-                ></textarea>
-                <div>
-                  {this.state.topics.map(topic => {
-                    return <span className="topic">#{topic} x</span>;
-                  })}
-                </div>
-              </div>
-              <ReactTextareaAutocomplete
-                className="form-control"
-                name="newMessage"
-                value={this.state.topic}
-                loadingComponent={() => <span>Loading</span>}
-                onKeyPress={this.addTopic.bind(this)}
-                onChange={this.onTopicsChange.bind(this)}
-                placeholder="Hashtag topics. Start with # (3 max)"
-                trigger={{
-                  "#": {
-                    dataProvider: token =>
-                      this.list
-                        .filter(i =>
-                          i.toLowerCase().includes(token.toLowerCase())
-                        )
-                        .map(o => ({
-                          word: o
-                        })),
-                    component: ({ entity: { word } }) => (
-                      <div>{` ${word}`}</div>
-                    ),
-                    output: item => `#${item.word}`
-                  }
-                }}
-              />
-              <AddEmoji addEmoji={this.addEmoji.bind(this)} />
-              <button
-                className="btn btn-primary"
-                id="add-confession-button"
-                disabled={this.state.isButtonLoading}
-                onClick={this.addConfession.bind(this)}
-              >
-                {!this.state.isButtonLoading ? "Add Konfession" : "Loading..."}
-              </button>
+        {/* <div className="col-md-10 col-lg-10 col-xl-6 mx-auto"> */}
+        <div id="newconfession-wrapper">
+          <div id="newconfession-textarea">
+            <textarea
+              className="form-control"
+              maxLength="63206"
+              rows="5"
+              value={this.state.confession}
+              onChange={this.onConfessionChange.bind(this)}
+              placeholder="Konfess here, don't worry, noone knows your identity but you"
+            ></textarea>
+            <div>
+              {this.state.topics.map(topic => {
+                return <span className="topic">#{topic} x</span>;
+              })}
             </div>
-          {/* </div> */}
+          </div>
+          <AsyncCreatableSelect
+            isMulti
+            cacheOptions
+            defaultOptions
+            loadOptions={this.promiseOptions.bind(this)}
+          />
+          <CreatableSelect
+            isMulti
+            // isDisabled={isLoading}
+            // isLoading={isLoading}
+            onChange={this.handleChange.bind(this)}
+            // onCreateOption={this.handleCreate.bind(this)}
+            options={colourOptions}
+            // value={value}
+          />
+          <ReactTextareaAutocomplete
+            className="form-control"
+            name="newMessage"
+            value={this.state.topic}
+            loadingComponent={() => <span>Loading</span>}
+            onKeyPress={this.addTopic.bind(this)}
+            onChange={this.onTopicsChange.bind(this)}
+            placeholder="Hashtag topics. Start with # (3 max)"
+            trigger={{
+              "#": {
+                dataProvider: token =>
+                  this.list
+                    .filter(i => i.toLowerCase().includes(token.toLowerCase()))
+                    .map(o => ({
+                      word: o
+                    })),
+                component: ({ entity: { word } }) => <div>{` ${word}`}</div>,
+                output: item => `#${item.word}`
+              }
+            }}
+          />
+          <AddEmoji addEmoji={this.addEmoji.bind(this)} />
+          <button
+            className="btn btn-primary"
+            id="add-confession-button"
+            disabled={this.state.isButtonLoading}
+            onClick={this.addConfession.bind(this)}
+          >
+            {!this.state.isButtonLoading ? "Add Konfession" : "Loading..."}
+          </button>
+        </div>
+        {/* </div> */}
         {/* </div> */}
       </React.Fragment>
     );

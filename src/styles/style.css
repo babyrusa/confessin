@@ -340,11 +340,14 @@ textarea {
 }
 #filterHashtag{
   z-index: 1;
-  color : #504658;
-  background: white;
+  /* color : #504658; */
+  /* background: white; */
   position: absolute;
-  padding : 5px;
+  /* padding : 5px; */
   text-align: left;
+}
+.hashtag-li {
+  cursor: pointer;
 }
 
 /**more button*/
