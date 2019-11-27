@@ -67,7 +67,7 @@ export default class App extends Component {
                   )}
                 />
                 <Route exact path="/hashtag/:hashtagKey" render={props => (<KonfessionFeed  {...props} userSession={userSession} />)}/>
-                <Route exact path="/konfession/:konfessionId" render={props => (<SingleKonfession  {...props} userSession={userSession} />)}/>
+                <Route exact path="/confession/:konfessionId" render={props => (<SingleKonfession  {...props} userSession={userSession} />)}/>
               </Switch>
             </React.Fragment>
           {/* )} */}

@@ -116,7 +116,7 @@ class KonfessionMoreButton extends Component {
   /**COPY POST LINK */
   getPostLink() {
     var textField = document.createElement('textarea')
-    textField.innerText = `https://dcasso.app/sketch/${this.props.sketch.attrs._id}`
+    textField.innerText = `https://confessin.app/confession/${this.props.konfession.attrs._id}`
     document.body.appendChild(textField)
     textField.select()
     document.execCommand('copy')
@@ -214,7 +214,7 @@ class KonfessionMoreButton extends Component {
           <h5>Share this awesome masterpiece on social media</h5>
           <div>
             <FacebookShareButton
-              url={`https://dcasso.app/sketch/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
               quote="Check out my masterpiece on Dcasso.app"
               className="social-butt"
             >
@@ -223,7 +223,7 @@ class KonfessionMoreButton extends Component {
                 round />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://dcasso.app/sketch/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
               quote="Check out my masterpiece on Dcasso.app"
               className="social-butt"
             >
@@ -232,7 +232,7 @@ class KonfessionMoreButton extends Component {
                 round />
             </TwitterShareButton>
             <TelegramShareButton
-              url={`https://dcasso.app/sketch/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
               quote="Check out my masterpiece on Dcasso.app"
               className="social-butt"
             >
@@ -241,7 +241,7 @@ class KonfessionMoreButton extends Component {
                 round />
             </TelegramShareButton>
             <WhatsappShareButton
-              url={`https://dcasso.app/sketch/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
               quote="Check out my masterpiece on Dcasso.app"
               className="social-butt"
             >

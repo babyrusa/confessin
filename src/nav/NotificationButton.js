@@ -32,9 +32,7 @@ export default class NotificationButton extends Component {
     for (let i = 0 ; i < _konf.length; i++) {
       const _reactions = await Reaction.fetchList({
         createdAt : {'$gte' : time },
-        // username : {'$ne' : userSession.loadUserData().username},
         konfessionId : _konf[i].attrs.konfessionId })
-        console.log(_reactions)
       for (let j = 0 ; i < _reactions.length; i++) {
         //TODO
         // if(_reactions[i].attrs.username !== )
@@ -72,7 +70,7 @@ export default class NotificationButton extends Component {
           <div className="notification-wrapper dropdown-menu">
             {this.state.notifcations.length > 0 ? this.state.notifcations.map(noti => {
               return <div class="dropdown-item noti-unread">
-                You have new <b>{noti.attrs.text}</b> at confession "<i>{noti.attrs.konfessionPreview}</i>"
+                You have a new <b>{noti.attrs.text}</b> at confession "<i>{noti.attrs.konfessionPreview}</i>"
                 &nbsp;<small>{TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}</small>
               </div>
             }) : <div className="p-2">You don't have any notifcations yet</div>}

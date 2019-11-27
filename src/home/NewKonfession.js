@@ -47,26 +47,22 @@ export default class NewKonfession extends Component {
     this.setState({ value: newValue });
     this.setState({ isLoading: true });
   }
-  handleCreate(e) {}
+  handleCreate(e) {
+    console.log(e)
+    this.setState({
+      topics : e
+    })
+  }
   async promiseOptions(e){
     // console.log(typeof Hashtag.fetchList({      text: { $regex: e }
     // }))
-    return Hashtag.fetchList({      text: { $regex: e }
+    const _hashtags = await Hashtag.fetchList({text: { $regex: e.toLowerCase() }})
+    return new Promise(resolve => {
+      resolve(_hashtags.map(tag => ({label : tag.attrs.text, value : tag.attrs.text})))
     })
   }
-  addTopic(e) {
-    if (e.key === "Enter" && this.state.topic !== "") {
-      if (this.state.topics.length < 3) {
-        console.log(this.state.topics, this.state.topic);
-        const _topics = this.state.topics;
-        _topics.push(this.state.topic.replace("#", ""));
-        this.setState({
-          topics: _topics,
-          topic: ""
-        });
-      }
-    }
-  }
+
+  
   async addConfession() {
     if (this.state.confession.trim() !== "") {
       this.setState({ isButtonLoading: true });
@@ -84,7 +80,7 @@ export default class NewKonfession extends Component {
         for (let i = 0; i < this.state.topics.length; i++) {
           const hashtag = new Hashtag({
             konfessionId: konfession._id,
-            text: this.state.topics[i]
+            text: this.state.topics[i].value
           });
           await hashtag.save();
         }
@@ -124,47 +120,13 @@ export default class NewKonfession extends Component {
               onChange={this.onConfessionChange.bind(this)}
               placeholder="Konfess here, don't worry, noone knows your identity but you"
             ></textarea>
-            <div>
-              {this.state.topics.map(topic => {
-                return <span className="topic">#{topic} x</span>;
-              })}
-            </div>
           </div>
           <AsyncCreatableSelect
             isMulti
             cacheOptions
             defaultOptions
             loadOptions={this.promiseOptions.bind(this)}
-          />
-          <CreatableSelect
-            isMulti
-            // isDisabled={isLoading}
-            // isLoading={isLoading}
-            onChange={this.handleChange.bind(this)}
-            // onCreateOption={this.handleCreate.bind(this)}
-            options={colourOptions}
-            // value={value}
-          />
-          <ReactTextareaAutocomplete
-            className="form-control"
-            name="newMessage"
-            value={this.state.topic}
-            loadingComponent={() => <span>Loading</span>}
-            onKeyPress={this.addTopic.bind(this)}
-            onChange={this.onTopicsChange.bind(this)}
-            placeholder="Hashtag topics. Start with # (3 max)"
-            trigger={{
-              "#": {
-                dataProvider: token =>
-                  this.list
-                    .filter(i => i.toLowerCase().includes(token.toLowerCase()))
-                    .map(o => ({
-                      word: o
-                    })),
-                component: ({ entity: { word } }) => <div>{` ${word}`}</div>,
-                output: item => `#${item.word}`
-              }
-            }}
+            onChange={this.handleCreate.bind(this)}
           />
           <AddEmoji addEmoji={this.addEmoji.bind(this)} />
           <button
