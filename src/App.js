@@ -17,7 +17,7 @@ const userSession = new UserSession({ appConfig: appConfig });
 const apiServer =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
-    : "https://dcasso-server.herokuapp.com";
+    : "https://confessin-server.herokuapp.com";
 configure({
   apiServer: apiServer,
   userSession
