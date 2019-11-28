@@ -122,11 +122,13 @@ export default class SingleKonfession extends Component {
         <KonfessionReaction
           konfession={this.props.konfession}
           userSession={this.props.userSession}
+          openModal={this.props.openModal}
         />
+        {this.props.userSession.isUserSignedIn() &&
         <KonfessionCommentSection
           konfession={this.props.konfession}
           userSession={this.props.userSession}
-        />
+        />}
       </div>
     );
   }

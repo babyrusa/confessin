@@ -105,6 +105,7 @@ export default class KonfessionFeed extends Component {
                       konfession={konfession}
                       userSession={this.props.userSession}
                       fetchKonfessions={this.fetchKonfessions.bind(this)}
+                      openModal = {this.props.openModal}
                     />
                   );
                 })}
@@ -113,7 +114,7 @@ export default class KonfessionFeed extends Component {
             ) : !this.state.isLoading ? (
               <div>
                 {" "}
-                <p>No Sketches to display</p>
+                <p>No Confession to display</p>
               </div>
             ) : (
               <p>loading...</p>

@@ -4,7 +4,7 @@ import Signin from "./Signin.js";
 import { User, configure, getConfig } from "radiks";
 import { UserSession, AppConfig, config } from "blockstack";
 import Nav from "./nav/Nav.js";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./home/Home.js";
 import KonfessionFeed from "./home/KonfessionFeed.js";
 import SingleKonfession from "./konfession/SingleKonfession.js";
@@ -57,17 +57,10 @@ export default class App extends Component {
               <Switch>
                 <Route exact path="/" render={props => (<Home {...props} userSession={userSession} />)}/>
                 <Route exact path="/signin" render={props => (<Signin {...props} userSession={userSession}  handleSignIn={ this.handleSignIn }/>)}/>
-                
-                <Route exact path="/profile" render={props => (
-                    <Profile
-                      {...props}
-                      handleSignOut={this.handleSignOut}
-                      userSession={userSession}
-                    />
-                  )}
-                />
+                <Route exact path="/profile" render={props => (<Profile {...props} handleSignOut={this.handleSignOut} userSession={userSession}/>)}/>
                 <Route exact path="/hashtag/:hashtagKey" render={props => (<KonfessionFeed  {...props} userSession={userSession} />)}/>
                 <Route exact path="/confession/:konfessionId" render={props => (<SingleKonfession  {...props} userSession={userSession} />)}/>
+                <Route path="*"  render={() => <Redirect to ="/"/>}/>
               </Switch>
             </React.Fragment>
           {/* )} */}

@@ -17,8 +17,8 @@ export default class SearchInput extends Component {
       hashtag: e.target.value
     });
     const _hashtags = await Hashtag.fetchList({
-      text: { $regex: e.target.value }
-    });
+      text: { $regex: e.target.value }},
+      { decrypt: this.props.userSession.isUserSignedIn() });
     console.log(_hashtags);
     // const _count = await Hashtag.count({ text: e.target.value });
     const _count = 100;

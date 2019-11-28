@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Konfession from "../models/Konfession";
 import SingleKonfession from "../konfession/SingleKonfession";
+import { withRouter } from "react-router";
 
-export default class ProfileFeed extends Component {
+class ProfileFeed extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +13,7 @@ export default class ProfileFeed extends Component {
   }
   componentDidMount() {
     if (!this.props.userSession.isUserSignedIn()) {
-      this.props.history.push(`/`);
+      this.props.history.push('/signin');
     }
 
     this.fetchSelfKonfessions().finally(() => {
@@ -67,3 +68,4 @@ export default class ProfileFeed extends Component {
     )
   }
 }
+export default withRouter(ProfileFeed)

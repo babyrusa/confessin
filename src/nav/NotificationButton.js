@@ -10,46 +10,67 @@ export default class NotificationButton extends Component {
     super(props);
     this.state = {
       input: "",
-      notifcations : []
-
+      notifcations: []
     };
   }
-  async fetchNotifications(){
-    console.log(new Date().getTime())
+  async fetchNotifications() {
+    console.log(new Date().getTime());
     let _notis = await Notification.fetchOwnList();
     this.setState({
-      notifcations : _notis
-    })
-    this.loadNewNoti()
+      notifcations: _notis
+    });
+    this.loadNewNoti();
   }
 
   async loadNewNoti() {
-    const {userSession} = this.props
-    console.log(userSession.loadUserData().username)
-    const time = this.state.notifcations.length > 0 ? this.state.notifcations[this.state.notifcations.length-1].attrs.createdAt : ''
+    const { userSession } = this.props;
+    console.log(userSession.loadUserData().username);
+    const time =
+      this.state.notifcations.length > 0
+        ? this.state.notifcations[this.state.notifcations.length - 1].attrs
+            .createdAt
+        : "";
 
-    let _konf  = await Konfession.fetchOwnList();
-    for (let i = 0 ; i < _konf.length; i++) {
+    let _konf = await Konfession.fetchOwnList();
+    for (let i = 0; i < _konf.length; i++) {
       const _reactions = await Reaction.fetchList({
-        createdAt : {'$gte' : time },
-        konfessionId : _konf[i].attrs.konfessionId })
-      for (let j = 0 ; i < _reactions.length; i++) {
+        createdAt: { $gte: time },
+        konfessionId: _konf[i].attrs.konfessionId
+      });
+      for (let j = 0; i < _reactions.length; i++) {
         //TODO
-        // if(_reactions[i].attrs.username !== )
-        const _noti = new Notification({
-          text : _reactions[i].attrs.type+" reaction",
-          konfessionId : _reactions[i].attrs._id,
-          konfessionPreview : _konf[i].attrs.text.substring(0,31),
-          madeAt : _reactions[i].attrs.createdAt 
-        })
-        console.log(_noti)
-        await _noti.save()
-        this.state.notifcations.push(_noti)
+        if (_reactions[i].attrs.username !== userSession.loadUserData().username) {
+          const _noti = new Notification({
+            text: _reactions[i].attrs.type + " reaction",
+            konfessionId: _reactions[i].attrs._id,
+            konfessionPreview: _konf[i].attrs.text.substring(0, 31),
+            madeAt: _reactions[i].attrs.createdAt
+          });
+          await _noti.save();
+          this.state.notifcations.push(_noti);
+        }
+      }
+      const _comments = await Comment.fetchList({
+        createdAt: { $gte: time },
+        konfessionId: _konf[i].attrs.konfessionId
+      });
+      for (let j = 0; i < _comments.length; i++) {
+        //TODO
+        if (_comments[i].attrs.username !== userSession.loadUserData().username) {
+          const _noti = new Notification({
+            text: "comment",
+            konfessionId: _comments[i].attrs._id,
+            konfessionPreview: _konf[i].attrs.text.substring(0, 31),
+            madeAt: _comments[i].attrs.createdAt
+          });
+          await _noti.save();
+          this.state.notifcations.push(_noti);
+        }
       }
     }
-    
+
     //fetch all self confessions
-    //loop through each confession , fetch all reaction & comment has that konfessionId 
+    //loop through each confession , fetch all reaction & comment has that konfessionId
     //make self-notification model
     //
   }
@@ -68,12 +89,21 @@ export default class NotificationButton extends Component {
             <i className="fas fa-bell fa-2x ikonfess-dark"></i>
           </button>
           <div className="notification-wrapper dropdown-menu">
-            {this.state.notifcations.length > 0 ? this.state.notifcations.map(noti => {
-              return <div class="dropdown-item noti-unread">
-                You have a new <b>{noti.attrs.text}</b> at confession "<i>{noti.attrs.konfessionPreview}</i>"
-                &nbsp;<small>{TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}</small>
-              </div>
-            }) : <div className="p-2">You don't have any notifcations yet</div>}
+            {this.state.notifcations.length > 0 ? (
+              this.state.notifcations.map(noti => {
+                return (
+                  <div class="dropdown-item noti-unread">
+                    You have a new <b>{noti.attrs.text}</b> at confession "
+                    <i>{noti.attrs.konfessionPreview}</i>" &nbsp;
+                    <small>
+                      {TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}
+                    </small>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="p-2">You don't have any notifcations yet</div>
+            )}
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ export default class KonfessionReaction extends Component {
   componentDidMount() {
     this.fetchReactions();
   }
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
     if (prevProps.konfession !== this.props.konfession) {
       this.fetchReactions();
     }
@@ -35,7 +35,7 @@ export default class KonfessionReaction extends Component {
     let _virtueCount = 0,
       _sinCount = 0,
       _deadlySinCount = 0;
-      // console.log(_reactions)
+    // console.log(_reactions)
     for (let i = 0; i < _reactions.length; i++) {
       if (_reactions[i].attrs.type === "virtue") {
         _virtueCount += 1;
@@ -54,15 +54,17 @@ export default class KonfessionReaction extends Component {
   }
   getSelfReaction(reaction) {
     // console.log(reaction);
-    if (this.props.userSession.isUserSignedIn() && reaction.attrs.username === this.props.userSession.loadUserData().username ) {
+    if (
+      this.props.userSession.isUserSignedIn() &&
+      reaction.attrs.username === this.props.userSession.loadUserData().username
+    ) {
       this.setState({
         selfReaction: reaction
       });
     } else {
-      this.resetSelfReaction()
+      this.resetSelfReaction();
     }
     // console.log(this.state.selfReaction.attrs.type)
-
   }
   resetSelfReaction() {
     this.setState({
@@ -81,28 +83,32 @@ export default class KonfessionReaction extends Component {
    */
   async saveReaction(reactionType) {
     const { userSession } = this.props;
-    if (this.state.selfReaction.attrs.type !== "") {
-      console.log("have liked")
-      if (reactionType !== this.state.selfReaction.attrs.type) {
-        console.log("same type")
+    if (userSession.isUserSignedIn()) {
+      if (this.state.selfReaction.attrs.type !== "") {
+        console.log("have liked");
+        if (reactionType !== this.state.selfReaction.attrs.type) {
+          console.log("same type");
 
-        this.state.selfReaction.update({
-          type: reactionType
-        });
-        await this.state.selfReaction.save();
+          this.state.selfReaction.update({
+            type: reactionType
+          });
+          await this.state.selfReaction.save();
+        } else {
+          await this.state.selfReaction.destroy();
+          this.resetSelfReaction();
+        }
       } else {
-        await this.state.selfReaction.destroy();
-        this.resetSelfReaction()
+        let _reaction = new Reaction({
+          konfessionId: this.props.konfession.attrs._id,
+          username: User.currentUser()._id,
+          type: `${reactionType}`
+        });
+        await _reaction.save();
       }
+      this.fetchReactions();
     } else {
-      let _reaction = new Reaction({
-        konfessionId: this.props.konfession.attrs._id,
-        username: User.currentUser()._id,
-        type: `${reactionType}`
-      });
-      await _reaction.save();
+      this.props.openModal();
     }
-    this.fetchReactions();
   }
 
   render() {
@@ -114,7 +120,9 @@ export default class KonfessionReaction extends Component {
             <button
               className={
                 "btn-primary btn-reaction btn-circle " +
-                (this.state.selfReaction.attrs.type === "virtue" ? "btn-selected" : "")
+                (this.state.selfReaction.attrs.type === "virtue"
+                  ? "btn-selected"
+                  : "")
               }
               data-toggle="tooltip"
               title="Virtue"
@@ -128,7 +136,9 @@ export default class KonfessionReaction extends Component {
             <button
               className={
                 "btn-primary btn-reaction btn-circle " +
-                (this.state.selfReaction.attrs.type === "sin" ? "btn-selected" : "")
+                (this.state.selfReaction.attrs.type === "sin"
+                  ? "btn-selected"
+                  : "")
               }
               data-toggle="tooltip"
               title="Sin"
@@ -142,12 +152,13 @@ export default class KonfessionReaction extends Component {
             <button
               className={
                 "btn-primary btn-reaction btn-circle " +
-                (this.state.selfReaction.attrs.type === "deadly sin" ? "btn-selected" : "")
+                (this.state.selfReaction.attrs.type === "deadly sin"
+                  ? "btn-selected"
+                  : "")
               }
               data-toggle="tooltip"
               title="Deadly Sin"
               onClick={this.saveReaction.bind(this, "deadly sin")}
-
             >
               💀
             </button>

@@ -50,28 +50,29 @@ export default class NewKonfession extends Component {
   handleCreate(e) {
     console.log(e)
     this.setState({
-      topics : e
+      topics: e
     })
   }
-  async promiseOptions(e){
-    const _hashtags = await Hashtag.fetchList({text: { $regex: e.toLowerCase() }})
+  async promiseOptions(e) {
+    const _hashtags = await Hashtag.fetchList({ text: { $regex: e.toLowerCase() } })
     return new Promise(resolve => {
-      resolve(_hashtags.map(tag => ({label : tag.attrs.text, value : tag.attrs.text})))
+      resolve(_hashtags.map(tag => ({ label: tag.attrs.text, value: tag.attrs.text })))
     })
   }
 
-  
+
   async addConfession() {
     if (this.state.confession.trim() !== "") {
       this.setState({ isButtonLoading: true });
       const { userSession } = this.props;
-      const totalConf = (await Konfession.count()) + 1;
-      console.log("topics ", this.state.topics);
+      const totalConf = await Konfession.fetchList(
+        {sort: "-createdAt", limit : 1, },
+        { decrypt: this.props.userSession.isUserSignedIn() });
       try {
         const konfession = new Konfession({
           username: userSession.loadUserData().username,
           text: this.state.confession,
-          index: totalConf
+          index: totalConf ? (Number(totalConf[0].attrs.index)+1) : 1 
         });
         console.log(konfession);
         await konfession.save();
@@ -116,7 +117,7 @@ export default class NewKonfession extends Component {
               rows="5"
               value={this.state.confession}
               onChange={this.onConfessionChange.bind(this)}
-              placeholder="Konfess here, don't worry, noone knows your identity but you"
+              placeholder="Spill some tea. Don't worry, noone knows your identity but you!"
             ></textarea>
           </div>
           <AsyncCreatableSelect
@@ -133,7 +134,7 @@ export default class NewKonfession extends Component {
             disabled={this.state.isButtonLoading}
             onClick={this.addConfession.bind(this)}
           >
-            {!this.state.isButtonLoading ? "Add Konfession" : "Loading..."}
+            {!this.state.isButtonLoading ? "Add Confession" : "Loading..."}
           </button>
         </div>
         {/* </div> */}

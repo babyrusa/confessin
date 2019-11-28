@@ -25,7 +25,7 @@ export default class Nav extends Component {
         <img src="/images/confessin-small2.png" className="logo-frame" width="50" height="50" alt="ConfesSin logo" />
           ConfesSin
         </Link>
-        <SearchInput/>
+        <SearchInput userSession = {this.props.userSession}/>
         <NotificationButton userSession = {this.props.userSession}/>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#filter-wrapper" aria-controls="filter-wrapper" aria-expanded="false" aria-label="Toggle navigation">
         <i className="fas fa-search"></i>
@@ -37,18 +37,19 @@ export default class Nav extends Component {
           <div className="navbar-nav ml-auto">
             {userSession.isUserSignedIn() &&
               <React.Fragment>
-                <Link to={"/profile"} className="nav-item btn btn-lg btn-primary" id="profile-feed">Profile</Link>
+                <Link to={"/profile"} className="nav-item btn btn-lg btn-primary d-lg-none" id="profile-feed">
+                  Profile</Link>
                 {/* <Link to={"/contact-us"} className="nav-item btn nav-showonphoneonly" id="profile-feed">Contact Us</Link> */}
 
                 <button
-                  className="nav-item btn btn-lg btn-primary nav-showonphoneonly"
+                  className="nav-item btn btn-lg btn-primary d-lg-none"
                   id="signout-button"
                   onClick={handleSignOut.bind(this)}
                 >
                   Logout
                 </button>
             <div className="btn-group">
-            <button type="button" className="btn dropdown-toggle nav-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" className="btn dropdown-toggle nav-more d-none d-lg-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               More
             </button>
             <div className="dropdown-menu">
