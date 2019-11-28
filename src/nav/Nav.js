@@ -52,12 +52,12 @@ export default class Nav extends Component {
               More
             </button>
             <div className="dropdown-menu">
-              <Link to="/profile" className="dropdown-item" href="#"><i className="fas fa-user text-primary"></i>&nbsp;Profile</Link>
-              <Link to="/contact-us" className="dropdown-item" ><i className="fas fa-envelope text-primary"></i>&nbsp;Contact Us</Link>
-              <Link to="/about-dcasso"><small className="dropdown-item">About Dcasso</small></Link>
+              <Link to="/profile" className="dropdown-item" href="#"><i className="fas fa-user ikonfess"></i>&nbsp;Profile</Link>
+              {/* <Link to="/contact-us" className="dropdown-item" ><i className="fas fa-envelope text-primary"></i>&nbsp;Contact Us</Link> */}
+              {/* <Link to="/about-dcasso"><small className="dropdown-item">About Dcasso</small></Link> */}
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" id="signout-button"
-                  onClick={handleSignOut.bind(this)} role="button"><i className="fas fa-sign-out-alt text-primary"></i>&nbsp;Log Out</a>
+                  onClick={handleSignOut.bind(this)} role="button"><i className="fas fa-sign-out-alt ikonfess"></i>&nbsp;Log Out</a>
             </div>
           </div>
               </React.Fragment>}

@@ -54,8 +54,6 @@ export default class NewKonfession extends Component {
     })
   }
   async promiseOptions(e){
-    // console.log(typeof Hashtag.fetchList({      text: { $regex: e }
-    // }))
     const _hashtags = await Hashtag.fetchList({text: { $regex: e.toLowerCase() }})
     return new Promise(resolve => {
       resolve(_hashtags.map(tag => ({label : tag.attrs.text, value : tag.attrs.text})))

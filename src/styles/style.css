@@ -379,3 +379,7 @@ textarea {
   box-shadow: 0 0 5px #ff66b6;
 
 }
+.social-butt{
+  /* float : left; */
+  display: inline-block;
+}

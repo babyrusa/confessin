@@ -1,9 +1,9 @@
 {
-  "name": "Hello, Blockstack",
-  "description": "A simple demo of Blockstack Auth",
+  "name": "ConfesSin",
+  "description": "Confession platform where your identity actually stays private.",
   "icons": [
     {
-    "src": "favicon.ico",
+    "src": "https://confessin.app/favicon.ico",
     "sizes": "32x32",
     "type": "image/png"
     }

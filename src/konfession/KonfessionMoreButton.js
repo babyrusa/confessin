@@ -211,11 +211,11 @@ class KonfessionMoreButton extends Component {
           style={shareStyles}
           contentLabel="Delete Confirmation"
         >
-          <h5>Share this awesome masterpiece on social media</h5>
+          <h5>Share this confession on social media</h5>
           <div>
             <FacebookShareButton
               url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
-              quote="Check out my masterpiece on Dcasso.app"
+              quote="Check out this funny confession on Confessin.app"
               className="social-butt"
             >
               <FacebookIcon
@@ -224,7 +224,7 @@ class KonfessionMoreButton extends Component {
             </FacebookShareButton>
             <TwitterShareButton
               url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
-              quote="Check out my masterpiece on Dcasso.app"
+              quote="Check out this funny confession on Confessin.app"
               className="social-butt"
             >
               <TwitterIcon
@@ -233,7 +233,7 @@ class KonfessionMoreButton extends Component {
             </TwitterShareButton>
             <TelegramShareButton
               url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
-              quote="Check out my masterpiece on Dcasso.app"
+              quote="Check out this funny confession on Confessin.app"
               className="social-butt"
             >
               <TelegramIcon
@@ -242,7 +242,7 @@ class KonfessionMoreButton extends Component {
             </TelegramShareButton>
             <WhatsappShareButton
               url={`https://confessin.app/confession/${this.props.konfession.attrs._id}`}
-              quote="Check out my masterpiece on Dcasso.app"
+              quote="Check out this funny confession on Confessin.app"
               className="social-butt"
             >
               <WhatsappIcon
