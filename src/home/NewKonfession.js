@@ -68,6 +68,7 @@ export default class NewKonfession extends Component {
       const totalConf = await Konfession.fetchList(
         {sort: "-createdAt", limit : 1, },
         { decrypt: this.props.userSession.isUserSignedIn() });
+      console.log("total conf",totalConf)
       try {
         const konfession = new Konfession({
           username: userSession.loadUserData().username,
