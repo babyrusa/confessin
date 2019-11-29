@@ -73,7 +73,7 @@ export default class NewKonfession extends Component {
         const konfession = new Konfession({
           username: userSession.loadUserData().username,
           text: this.state.confession,
-          index: totalConf ? (Number(totalConf[0].attrs.index)+1) : 1 
+          index: totalConf.length > 0 ? (Number(totalConf[0].attrs.index)+1) : 1 
         });
         console.log(konfession);
         await konfession.save();
