@@ -113,7 +113,7 @@ export default class KonfessionComment extends Component {
           />
         </div>
         {this.getGhostField()}
-        <div style={{position:"absolute" , top :"0", right : "0"}}>
+        <div style={{}}>
           <AddEmoji addEmoji={this.addEmoji.bind(this)} size="20" />
         </div>
       </div>

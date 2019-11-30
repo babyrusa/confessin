@@ -254,6 +254,7 @@ textarea {
 }
 #konfession-comment {
   width: 80%;
+  float: left;
   /* position: relative; */
 }
 #konfession-comment textarea {
@@ -281,8 +282,11 @@ textarea {
   visibility: hidden;
 }
 #konfession-comment-wrapper .btn-emoji {
-  padding: 10px;
+  padding: 1px 6px;
   /* float: right; */
+}
+.emoji-mart {
+  position: absolute;
 }
 /* #konfession-comment button {
   position: absolute;
