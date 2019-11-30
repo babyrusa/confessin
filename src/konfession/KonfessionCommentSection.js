@@ -80,7 +80,7 @@ export default class KonfessionCommentSection extends Component {
           {!this.state.loadedAll && (
             <div id="loadmore">
               <small onClick={this.loadMoreComments.bind(this)}>
-                Load more komments...
+                Load more comments...
               </small>
             </div>
           )}
