@@ -53,10 +53,15 @@ export default class SingleKonfession extends Component {
     }
   }
   editKonfession(){
-    this.setState({
-      editedKonfession : this.props.konfession.attrs.text,
-      editMode : true
-    })
+    try {
+      this.setState({
+        editedKonfession : this.props.konfession.attrs.text,
+        editMode : true
+      })
+    } catch(e){
+      alert("we apologize. Unable to edit confession at the moment. Please report issue and Try again later.")
+    }
+
   }
   stopEditKonfession(){
     this.setState({
@@ -75,6 +80,7 @@ export default class SingleKonfession extends Component {
     })
     await this.props.konfession.save()
     this.stopEditKonfession()
+    // window.location.reload(false);
     } catch(e){
       alert("unable to save, try again later")
     }
@@ -124,11 +130,10 @@ export default class SingleKonfession extends Component {
           userSession={this.props.userSession}
           openModal={this.props.openModal}
         />
-        {this.props.userSession.isUserSignedIn() &&
         <KonfessionCommentSection
           konfession={this.props.konfession}
           userSession={this.props.userSession}
-        />}
+        />
       </div>
     );
   }

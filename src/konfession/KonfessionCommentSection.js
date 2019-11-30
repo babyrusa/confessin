@@ -112,11 +112,13 @@ export default class KonfessionCommentSection extends Component {
             );
           })}
         </div>
-        <KonfessionComment
-          konfession={this.props.konfession}
-          fetchComments={this.fetchComments.bind(this)}
-          userSession={this.props.userSession}
-        />
+        {this.props.userSession.isUserSignedIn() && (
+          <KonfessionComment
+            konfession={this.props.konfession}
+            fetchComments={this.fetchComments.bind(this)}
+            userSession={this.props.userSession}
+          />
+        )}
       </React.Fragment>
     );
   }
