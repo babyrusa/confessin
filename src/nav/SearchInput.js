@@ -40,7 +40,7 @@ export default class SearchInput extends Component {
             type="text"
             className="form-control nav-filter"
             style={{ fontFamily: "sans-serif, FontAwesome" }}
-            placeholder="&#xF002; Filter Konfessions by Hashtags"
+            placeholder="&#xF002; Filter Confessions by Hashtags"
             value={this.state.hashtag}
             onChange={this.onChangeHandler.bind(this)}
           />
