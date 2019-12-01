@@ -125,6 +125,7 @@ export default class NewKonfession extends Component {
             isMulti
             cacheOptions
             defaultOptions
+            placeholder = "Add topics"
             loadOptions={this.promiseOptions.bind(this)}
             onChange={this.handleCreate.bind(this)}
           />
