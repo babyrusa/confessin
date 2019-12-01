@@ -14,9 +14,9 @@ export default class KonfessionReaction extends Component {
           _id: "",
           type: "",
           username: ""
-        }
+        },
       },
-      decrypt: true //default as true, decrypt=false when user not logged in
+      selfReactionType : ""
     };
   }
   componentDidMount() {
@@ -28,6 +28,7 @@ export default class KonfessionReaction extends Component {
     }
   }
   async fetchReactions() {
+    console.log("fetch reaction")
     let _reactions = await Reaction.fetchList(
       { konfessionId: this.props.konfession.attrs._id },
       { decrypt: this.props.userSession.isUserSignedIn() }
@@ -74,7 +75,8 @@ export default class KonfessionReaction extends Component {
           type: "",
           username: ""
         }
-      }
+      },
+      selfReactionType : ""
     });
   }
   /**
@@ -85,27 +87,37 @@ export default class KonfessionReaction extends Component {
     const { userSession } = this.props;
     if (userSession.isUserSignedIn()) {
       if (this.state.selfReaction.attrs.type !== "") {
-        console.log("have liked");
+        // console.log("have liked");
         if (reactionType !== this.state.selfReaction.attrs.type) {
-          console.log("same type");
-
+          // console.log("NOT same type");
+          
           this.state.selfReaction.update({
             type: reactionType
           });
-          await this.state.selfReaction.save();
+          this.setState({
+            selfReaction : this.state.selfReaction
+          });
+          await this.state.selfReaction.save()
+         
         } else {
-          await this.state.selfReaction.destroy();
+          // console.log("same type");
+          await this.state.selfReaction.destroy()
           this.resetSelfReaction();
         }
       } else {
-        let _reaction = new Reaction({
-          konfessionId: this.props.konfession.attrs._id,
-          username: User.currentUser()._id,
-          type: `${reactionType}`
-        });
-        await _reaction.save();
+        // console.log("have NOT liked");
+          let _reaction = new Reaction({
+            konfessionId: this.props.konfession.attrs._id,
+            username: User.currentUser()._id,
+            type: `${reactionType}`
+          });
+          this.setState({
+            selfReaction : _reaction
+          });
+          await _reaction.save();
+
       }
-      this.fetchReactions();
+      await this.fetchReactions();
     } else {
       this.props.openModal();
     }
@@ -125,6 +137,7 @@ export default class KonfessionReaction extends Component {
                   : "")
               }
               data-toggle="tooltip"
+              data-placement="bottom"
               title="Virtue"
               onClick={this.saveReaction.bind(this, "virtue")}
             >
@@ -141,6 +154,7 @@ export default class KonfessionReaction extends Component {
                   : "")
               }
               data-toggle="tooltip"
+              data-placement="bottom"
               title="Sin"
               onClick={this.saveReaction.bind(this, "sin")}
             >
@@ -157,6 +171,7 @@ export default class KonfessionReaction extends Component {
                   : "")
               }
               data-toggle="tooltip"
+              data-placement="bottom"
               title="Deadly Sin"
               onClick={this.saveReaction.bind(this, "deadly sin")}
             >
