@@ -14,6 +14,8 @@ body {
 p {
   margin-bottom: 0px;
 }
+small{
+}
 .hide {
   display: none;
 }
@@ -238,7 +240,7 @@ textarea {
   margin: 5px;
   padding: 28px;
   /* box-shadow: #ff66b6; */
-  box-shadow: 0 0 20px  #ff66b6;
+  /* box-shadow: 0 0 20px  #ff66b6; */
 
   /* ffb5b5 */
 }
@@ -252,19 +254,19 @@ textarea {
 }
 #konfession-comment-wrapper div {
 }
-#konfession-comment {
-  width: 80%;
+.konfession-comment {
+  width: 90%;
   float: left;
   /* position: relative; */
 }
-#konfession-comment textarea {
+.konfession-comment textarea {
   border-radius: 20px;
   min-height: 40px;
   overflow: hidden; 
   display: block;
   transition: height 0.5s ease;
 }
-#konfession-comment textarea[type="text"] {
+.konfession-comment textarea[type="text"] {
   /* border: none; */
   /* width: 100%; */
   /* padding-right: 123px; */
@@ -281,7 +283,7 @@ textarea {
   word-wrap: break-word;  
   visibility: hidden;
 }
-#konfession-comment-wrapper .btn-emoji {
+.konfession-comment-wrapper .btn-emoji {
   padding: 1px 6px;
   /* float: right; */
 }

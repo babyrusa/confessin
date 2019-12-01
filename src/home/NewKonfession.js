@@ -118,7 +118,7 @@ export default class NewKonfession extends Component {
               rows="5"
               value={this.state.confession}
               onChange={this.onConfessionChange.bind(this)}
-              placeholder="Spill some tea. Don't worry, noone knows your identity but you!"
+              placeholder="Spill some tea. Don't worry, no one knows your identity but you!"
             ></textarea>
           </div>
           <AsyncCreatableSelect

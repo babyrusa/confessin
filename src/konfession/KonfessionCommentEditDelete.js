@@ -14,7 +14,7 @@ export default class KonfessionCommentEditDelete extends Component {
   isOwner() {
     const { userSession } = this.props
     if (userSession.isUserSignedIn()) {
-      return userSession.loadUserData().username === this.props.konfession.attrs.username
+      return userSession.loadUserData().username === this.props.comment.attrs.username
     }
     return false;
   }
@@ -24,6 +24,7 @@ export default class KonfessionCommentEditDelete extends Component {
     await comment.destroy();
     this.props.fetchComments()
   }
+
   
   render() {
     return (
@@ -49,7 +50,7 @@ export default class KonfessionCommentEditDelete extends Component {
                 </a>
                 <a
                   className="dropdown-item"
-                  onClick={() => this.openDeleteModal()}
+                  onClick={this.props.editComment}
                 >
                   <i className="fas fa-pen ikonfess"></i>&nbsp;&nbsp;Edit
                 </a>

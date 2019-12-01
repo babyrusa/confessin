@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import TimeStamp from "../shared/timestamp.js";
 import Comment from "../models/Comment.js";
-import KonfessionComment from "./KonfessionComment.js";
+import KonfessionNewComment from "./KonfessionNewComment.js";
 import KonfessionCommentEditDelete from "./KonfessionCommentEditDelete.js";
+import KonfessionSingleComment from "./KonfessionSingleComment.js";
 
 export default class KonfessionCommentSection extends Component {
   incrementLimit = 5;
@@ -12,7 +13,8 @@ export default class KonfessionCommentSection extends Component {
       comments: [],
       olderComments: [], //prefetch
       loadedAll: true,
-      offset: 3
+      offset: 3,
+
     };
   }
   componentDidMount() {
@@ -33,7 +35,7 @@ export default class KonfessionCommentSection extends Component {
           sort: "-createdAt",
           limit: this.state.offset
         },
-        { decrypt: false }
+        { decrypt: this.props.userSession.isUserSignedIn()  }
       );
 
       this.setState({
@@ -59,7 +61,7 @@ export default class KonfessionCommentSection extends Component {
         limit: this.incrementLimit,
         offset: this.state.offset
       },
-      { decrypt: false }
+      { decrypt: this.props.userSession.isUserSignedIn()  }
     );
     if (_comments.length === 0) {
       this.setState({
@@ -86,34 +88,18 @@ export default class KonfessionCommentSection extends Component {
           )}
           {this.state.comments.map(comment => {
             return (
-              <div className="single-comment" key={comment.attrs._id}>
-                <KonfessionCommentEditDelete
-                  userSession={this.props.userSession}
-                  konfession={this.props.konfession}
-                  comment={comment}
-                  fetchComments={this.fetchComments.bind(this)}
-                />
-                <small className="ikonfess">
-                  {comment.attrs.anonymousIdentity
-                    ? comment.attrs.anonymousIdentity
-                    : "Anonymous sinner"}
-                </small>
-                <div>
-                  <p>{comment.attrs.text}</p>
-                </div>
-                <div>
-                  <small>
-                    {TimeStamp.convertDate(
-                      comment.attrs.createdAt
-                    ).toLowerCase()}
-                  </small>
-                </div>
-              </div>
+              <KonfessionSingleComment 
+              key = {comment.attrs._id}
+              comment = {comment}
+              userSession = {this.props.userSession}
+              konfession={this.props.konfession}
+              fetchComments={this.fetchComments.bind(this)}
+              />
             );
           })}
         </div>
         {this.props.userSession.isUserSignedIn() && (
-          <KonfessionComment
+          <KonfessionNewComment
             konfession={this.props.konfession}
             fetchComments={this.fetchComments.bind(this)}
             userSession={this.props.userSession}

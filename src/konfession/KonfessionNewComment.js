@@ -7,7 +7,7 @@ var animals = require('../animals.json');
 
 const DEFAULT_HEIGHT = 40;
 
-export default class KonfessionComment extends Component {
+export default class KonfessionNewComment extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,10 +95,9 @@ export default class KonfessionComment extends Component {
     const isOneLine = this.state.height <= DEFAULT_HEIGHT;
     const { height, value } = this.state;
     return (
-      <div id="konfession-comment-wrapper" style={{position:"relative"}}>
-        <div id="konfession-comment">
+      <div className="konfession-comment-wrapper" style={{position:"relative"}}>
+        <div className="konfession-comment">
           <textarea
-            id="konfession-comment-textarea"
             type="text"
             className="form-control"
             placeholder="Drop your thoughts..."
@@ -108,8 +107,6 @@ export default class KonfessionComment extends Component {
             onChange={this.onCommentChange.bind(this)}
             onKeyDown={this.postComment.bind(this)}
             onKeyUp={this.setFilledTextareaHeight.bind(this)}
-
-            // style={{height : '10px'}}
           />
         </div>
         {this.getGhostField()}

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Konfession from "../models/Konfession";
 import KonfessionReaction from "./KonfessionReaction";
-import KonfessionComment from "./KonfessionComment";
 import TimeStamp from "../shared/timestamp.js";
 import KonfessionCommentSection from "./KonfessionCommentSection";
 import KonfessionHashtag from "./KonfessionHashtag";
@@ -53,14 +52,10 @@ export default class SingleKonfession extends Component {
     }
   }
   editKonfession(){
-    try {
       this.setState({
         editedKonfession : this.props.konfession.attrs.text,
         editMode : true
       })
-    } catch(e){
-      alert("we apologize. Unable to edit confession at the moment. Please report issue and Try again later.")
-    }
 
   }
   stopEditKonfession(){
@@ -82,7 +77,7 @@ export default class SingleKonfession extends Component {
     this.stopEditKonfession()
     // window.location.reload(false);
     } catch(e){
-      alert("unable to save, try again later")
+      alert("we apologize. unable to save, try again later")
     }
   }
 
@@ -98,11 +93,14 @@ export default class SingleKonfession extends Component {
         />
         <div>
           <p>Confession {this.props.konfession.attrs.index}</p>
-          <small>
+          <small style={{padding : '5px'}}>
             {TimeStamp.convertDate(
               this.props.konfession.attrs.createdAt
             ).toLowerCase()}
           </small>
+          <small style={{padding : '5px'}}>
+              {this.props.konfession.attrs.updatedAt !== this.props.konfession.attrs.createdAt ? 'Edited' : ''}
+            </small>
           {!this.state.editMode ? <div>
             <i className="fas fa-quote-left"></i>
             <h1>{this.props.konfession.attrs.text}</h1>

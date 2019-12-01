@@ -29,22 +29,24 @@ export default class NotificationButton extends Component {
       this.state.notifcations.length > 0
         ? this.state.notifcations[this.state.notifcations.length - 1].attrs
             .createdAt
-        : "";
+        : new Date("1997-04-01").getTime();
 
     let _konf = await Konfession.fetchOwnList();
     for (let i = 0; i < _konf.length; i++) {
       const _reactions = await Reaction.fetchList({
         createdAt: { $gte: time },
-        konfessionId: _konf[i].attrs.konfessionId
+        konfessionId: _konf[i].attrs._id
       });
-      for (let j = 0; i < _reactions.length; i++) {
+      console.log("reactions ",_reactions)
+      for (let j = 0; j < _reactions.length; j++) {
+        console.log(_reactions[j].attrs.username, userSession.loadUserData().username)
         //TODO
-        if (_reactions[i].attrs.username !== userSession.loadUserData().username) {
+        if (_reactions[j].attrs.username !== userSession.loadUserData().username) {
           const _noti = new Notification({
-            text: _reactions[i].attrs.type + " reaction",
-            konfessionId: _reactions[i].attrs._id,
+            text: _reactions[j].attrs.type + " reaction",
+            konfessionId: _reactions[j].attrs._id,
             konfessionPreview: _konf[i].attrs.text.substring(0, 31),
-            madeAt: _reactions[i].attrs.createdAt
+            madeAt: _reactions[j].attrs.createdAt
           });
           await _noti.save();
           this.state.notifcations.push(_noti);
@@ -52,16 +54,16 @@ export default class NotificationButton extends Component {
       }
       const _comments = await Comment.fetchList({
         createdAt: { $gte: time },
-        konfessionId: _konf[i].attrs.konfessionId
+        konfessionId: _konf[i].attrs._id
       });
-      for (let j = 0; i < _comments.length; i++) {
+      for (let j = 0; j < _comments.length; j++) {
         //TODO
-        if (_comments[i].attrs.username !== userSession.loadUserData().username) {
+        if (_comments[j].attrs.username !== userSession.loadUserData().username) {
           const _noti = new Notification({
             text: "comment",
-            konfessionId: _comments[i].attrs._id,
+            konfessionId: _comments[j].attrs._id,
             konfessionPreview: _konf[i].attrs.text.substring(0, 31),
-            madeAt: _comments[i].attrs.createdAt
+            madeAt: _comments[j].attrs.createdAt
           });
           await _noti.save();
           this.state.notifcations.push(_noti);
@@ -92,9 +94,9 @@ export default class NotificationButton extends Component {
             {this.state.notifcations.length > 0 ? (
               this.state.notifcations.map(noti => {
                 return (
-                  <div class="dropdown-item noti-unread">
+                  <div className="dropdown-item noti-unread">
                     You have a new <b>{noti.attrs.text}</b> at confession "
-                    <i>{noti.attrs.konfessionPreview}</i>" &nbsp;
+                    <i>{noti.attrs.konfessionPreview}...</i>" &nbsp;
                     <small>
                       {TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}
                     </small>
