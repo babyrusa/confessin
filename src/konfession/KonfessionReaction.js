@@ -28,7 +28,6 @@ export default class KonfessionReaction extends Component {
     }
   }
   async fetchReactions() {
-    console.log("fetch reaction")
     let _reactions = await Reaction.fetchList(
       { konfessionId: this.props.konfession.attrs._id },
       { decrypt: this.props.userSession.isUserSignedIn() }
@@ -85,12 +84,39 @@ export default class KonfessionReaction extends Component {
    */
   async saveReaction(reactionType) {
     const { userSession } = this.props;
+    
     if (userSession.isUserSignedIn()) {
       if (this.state.selfReaction.attrs.type !== "") {
         // console.log("have liked");
+        if (this.state.selfReaction.attrs.type === "virtue"){
+          this.setState({
+            virtueCount : this.state.virtueCount - 1
+          })
+        } else if (this.state.selfReaction.attrs.type === "sin") {
+          this.setState({
+            sinCount : this.state.sinCount - 1
+          })
+        } else if (this.state.selfReaction.attrs.type === "deadly sin") {
+          this.setState({
+            deadlySinCount : this.state.deadlySinCount - 1
+          })
+        }
+       
         if (reactionType !== this.state.selfReaction.attrs.type) {
           // console.log("NOT same type");
-          
+          if (reactionType === "virtue"){
+            this.setState({
+              virtueCount : this.state.virtueCount + 1
+            })
+          } else if (reactionType === "sin") {
+            this.setState({
+              sinCount : this.state.sinCount + 1
+            })
+          } else if (reactionType === "deadly sin") {
+            this.setState({
+              deadlySinCount : this.state.deadlySinCount + 1
+            })
+          }
           this.state.selfReaction.update({
             type: reactionType
           });
@@ -106,6 +132,19 @@ export default class KonfessionReaction extends Component {
         }
       } else {
         // console.log("have NOT liked");
+        if (reactionType === "virtue"){
+          this.setState({
+            virtueCount : this.state.virtueCount + 1
+          })
+        } else if (reactionType === "sin") {
+          this.setState({
+            sinCount : this.state.sinCount + 1
+          })
+        } else if (reactionType === "deadly sin") {
+          this.setState({
+            deadlySinCount : this.state.deadlySinCount + 1
+          })
+        }
           let _reaction = new Reaction({
             konfessionId: this.props.konfession.attrs._id,
             username: User.currentUser()._id,
