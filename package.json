@@ -19,6 +19,7 @@
     "emoji-mart": "^2.11.1",
     "radiks": "^0.3.0-beta.1",
     "react": "^16.8.6",
+    "react-animated-dots": "^1.1.0",
     "react-dom": "^16.8.6",
     "react-feather": "^2.0.3",
     "react-modal": "^3.11.1",

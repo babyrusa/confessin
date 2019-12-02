@@ -178,8 +178,8 @@ class KonfessionMoreButton extends Component {
             }
             <a className="dropdown-item" onClick={() => this.openShareModal()}>
             <i className="fas fa-share ikonfess"></i>&nbsp;&nbsp;Share
-            <div className="dropdown-divider"></div>
             </a>
+            <div className="dropdown-divider"></div>
             <a className="dropdown-item" onClick={() => this.getPostLink()}>
             <i className="fas fa-copy ikonfess"></i>&nbsp;&nbsp;Copy Link
             </a>

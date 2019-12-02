@@ -20,7 +20,8 @@ export default class KonfessionHashtag extends Component {
   }
 
   async fetchHashtags(){
-    const _hashtags = await Hashtag.fetchList({konfessionId : this.props.konfession.attrs._id}, { decrypt: false })
+    const _hashtags = await Hashtag.fetchList({konfessionId : this.props.konfession.attrs._id}, 
+      { decrypt: this.props.userSession.isUserSignedIn() })
     this.setState({
       hashtags : _hashtags
     })

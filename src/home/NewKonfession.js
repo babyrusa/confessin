@@ -108,8 +108,8 @@ export default class NewKonfession extends Component {
     const { isLoading } = this.state;
     return (
       <React.Fragment>
-        {/* <div className="row"> */}
-        {/* <div className="col-md-10 col-lg-10 col-xl-6 mx-auto"> */}
+        <div className="row">
+        <div className="col-md-10 col-lg-10 col-xl-6 mx-auto">
         <div id="newconfession-wrapper">
           <div id="newconfession-textarea">
             <textarea
@@ -139,8 +139,8 @@ export default class NewKonfession extends Component {
             {!this.state.isButtonLoading ? "Add Confession" : "Loading..."}
           </button>
         </div>
-        {/* </div> */}
-        {/* </div> */}
+        </div>
+        </div>
       </React.Fragment>
     );
   }
