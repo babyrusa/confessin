@@ -32,7 +32,6 @@ export default class NewKonfession extends Component {
   }
   onTopicsChange(e) {
     e.target.value = e.target.value.trim();
-    console.log(e.target.value);
     if (e.target.value.match(/^[#a-zA-Z_]*$/)) {
       this.setState({
         topic: e.target.value
@@ -40,15 +39,10 @@ export default class NewKonfession extends Component {
     }
   }
   handleChange(newValue, actionMeta) {
-    console.group("Value Changed");
-    console.log(newValue);
-    console.log(`action: ${actionMeta.action}`);
-    console.groupEnd();
     this.setState({ value: newValue });
     this.setState({ isLoading: true });
   }
   handleCreate(e) {
-    console.log(e)
     this.setState({
       topics: e
     })
@@ -68,14 +62,12 @@ export default class NewKonfession extends Component {
       const totalConf = await Konfession.fetchList(
         {sort: "-createdAt", limit : 1, },
         { decrypt: this.props.userSession.isUserSignedIn() });
-      console.log("total conf",totalConf)
       try {
         const konfession = new Konfession({
           username: userSession.loadUserData().username,
           text: this.state.confession,
           index: totalConf.length > 0 ? (Number(totalConf[0].attrs.index)+1) : 1 
         });
-        console.log(konfession);
         await konfession.save();
         for (let i = 0; i < this.state.topics.length; i++) {
           const hashtag = new Hashtag({

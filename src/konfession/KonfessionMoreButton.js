@@ -122,7 +122,6 @@ class KonfessionMoreButton extends Component {
     document.execCommand('copy')
     textField.remove()
     this.setOpen()
-    console.log("get post link", window.location.href, this.props.sketchId)
   }
 
   isOwner() {

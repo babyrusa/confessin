@@ -26,7 +26,7 @@ export default class Nav extends Component {
           ConfesSin
         </Link>
         <SearchInput userSession = {this.props.userSession}/>
-        {/* <NotificationButton userSession = {this.props.userSession}/> */}
+        <NotificationButton userSession = {this.props.userSession}/>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#filter-wrapper" aria-controls="filter-wrapper" aria-expanded="false" aria-label="Toggle navigation">
         <i className="fas fa-search"></i>
                 </button>

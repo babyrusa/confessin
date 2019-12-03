@@ -47,6 +47,13 @@ export default class SingleKonfession extends Component {
         konfession: this.props.konfession
       });
     }
+    if (this.props.match && prevProps.match.params.konfessionId !== this.props.match.params.konfessionId) {
+      this.fetchKonfessionById().finally(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+    }
   }
   async fetchKonfessionById() {
     let _konf = await Konfession.findById(

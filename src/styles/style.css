@@ -96,6 +96,9 @@ small{
 .noti-unread {
   background-color: #f8cbe3;
 }
+.dropdown-menu a {
+  text-decoration: none;
+}
 .navbar-toggler {
   border : none;
 }

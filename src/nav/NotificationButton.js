@@ -4,27 +4,34 @@ import Reaction from "../models/Reaction";
 import Konfession from "../models/Konfession";
 import Notification from "../models/Notification";
 import TimeStamp from "../shared/timestamp.js";
+import { Link } from "react-router-dom";
 
 export default class NotificationButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: "",
-      notifcations: []
+      notifcations: [],
+      notiOpen : false,
     };
   }
   async fetchNotifications() {
-    console.log(new Date().getTime());
-    let _notis = await Notification.fetchOwnList();
-    this.setState({
-      notifcations: _notis
-    });
-    this.loadNewNoti();
+    if(this.state.notiOpen) {
+      this.setState({
+        notiOpen : false
+      });
+    } else {
+      let _notis = await Notification.fetchOwnList();
+      this.setState({
+        notifcations: _notis.reverse(),
+        notiOpen : true
+      });
+      this.loadNewNoti();
+    }
   }
 
   async loadNewNoti() {
     const { userSession } = this.props;
-    console.log(userSession.loadUserData().username);
     const time =
       this.state.notifcations.length > 0
         ? this.state.notifcations[this.state.notifcations.length - 1].attrs
@@ -37,19 +44,17 @@ export default class NotificationButton extends Component {
         createdAt: { $gte: time },
         konfessionId: _konf[i].attrs._id
       });
-      console.log("reactions ",_reactions)
       for (let j = 0; j < _reactions.length; j++) {
-        console.log(_reactions[j].attrs.username, userSession.loadUserData().username)
         //TODO
         if (_reactions[j].attrs.username !== userSession.loadUserData().username) {
           const _noti = new Notification({
             text: _reactions[j].attrs.type + " reaction",
-            konfessionId: _reactions[j].attrs._id,
+            konfessionId: _reactions[j].attrs.konfessionId,
             konfessionPreview: _konf[i].attrs.text.substring(0, 31),
             madeAt: _reactions[j].attrs.createdAt
           });
           await _noti.save();
-          this.state.notifcations.push(_noti);
+          this.state.notifcations.unshift(_noti);
         }
       }
       const _comments = await Comment.fetchList({
@@ -61,12 +66,12 @@ export default class NotificationButton extends Component {
         if (_comments[j].attrs.username !== userSession.loadUserData().username) {
           const _noti = new Notification({
             text: "comment",
-            konfessionId: _comments[j].attrs._id,
+            konfessionId: _comments[j].attrs.konfessionId,
             konfessionPreview: _konf[i].attrs.text.substring(0, 31),
             madeAt: _comments[j].attrs.createdAt
           });
           await _noti.save();
-          this.state.notifcations.push(_noti);
+          this.state.notifcations.unshift(_noti);
         }
       }
     }
@@ -82,25 +87,29 @@ export default class NotificationButton extends Component {
         <div className="btn-group">
           {/* <i class="fas fa-comment-dots ikonfess-dark d-sm-block d-md-none"></i> */}
           <button
-            className="btn notification-dropdown dropdown-toggle"
-            data-toggle="dropdown"
+            className="btn notification-dropdown"
+            // data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
             onClick={this.fetchNotifications.bind(this)}
           >
             <i className="fas fa-bell fa-2x ikonfess-dark"></i>
           </button>
-          <div className="notification-wrapper dropdown-menu">
+          <div className={'notification-wrapper dropdown-menu ' + (this.state.notiOpen ? 'show' : '')}>
             {this.state.notifcations.length > 0 ? (
               this.state.notifcations.map(noti => {
                 return (
-                  <div className="dropdown-item noti-unread">
+                  <Link to={`/confession/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
+
+                  <div className="dropdown-item noti-unread" >
                     You have a new <b>{noti.attrs.text}</b> at confession "
                     <i>{noti.attrs.konfessionPreview}...</i>" &nbsp;
                     <small>
                       {TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}
                     </small>
                   </div>
+                  </Link>
+
                 );
               })
             ) : (

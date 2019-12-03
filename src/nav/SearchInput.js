@@ -22,7 +22,6 @@ export default class SearchInput extends Component {
         },
         { decrypt: this.props.userSession.isUserSignedIn() }
       );
-      console.log(_hashtags);
       // const _count = await Hashtag.count({ text: e.target.value });
       const _count = 100;
       this.setState({
