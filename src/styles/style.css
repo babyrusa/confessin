@@ -294,6 +294,7 @@ textarea {
   /* float: right; */
 }
 .emoji-mart {
+  z-index: 1;
   position: absolute;
 }
 /* #konfession-comment button {
