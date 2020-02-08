@@ -12,11 +12,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "@material-ui/core": "^4.7.0",
     "@material-ui/icons": "^4.5.1",
     "@webscopeio/react-textarea-autocomplete": "^4.6.1",
     "blockstack": "^19.2.5",
     "emoji-mart": "^2.11.1",
+    "jquery": "^3.4.1",
     "radiks": "^0.3.0-beta.1",
     "react": "^16.8.6",
     "react-animated-dots": "^1.1.0",
