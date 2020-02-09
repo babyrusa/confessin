@@ -3,7 +3,8 @@ import Konfession from "../models/Konfession";
 import TimeStamp from "../shared/timestamp.js";
 import { Dot } from "react-animated-dots";
 import KonfessionHashtag from "../konfession/KonfessionHashtag";
-import KonfessionReaction from "../konfession/KonfessionReaction";
+import { Link } from "react-router-dom";
+import KonfessionCardReaction from "./KonfessionCardReaction";
 
 export default class KonfessionCard extends Component {
   constructor(props) {
@@ -28,14 +29,15 @@ export default class KonfessionCard extends Component {
     const { konfession } = this.props;
     const length = konfession.attrs.text.length;
     return (
-      <div className="confession-card">
+      // <div className="confession-card">
+        <Link to={`/c/${konfession.attrs._id}`} className="confession-card">
         <span className="confession-index">
           {konfession.attrs.index}
           &#46;
         </span>
         <div className="confession-top">
           <small style={{ padding: "5px" }}>
-            {TimeStamp.convertDate(konfession.attrs.createdAt).toLowerCase()}
+            {TimeStamp.convertDate(konfession.attrs.createdAt).toUpperCase()}
           </small>
 
           <small style={{ padding: "5px" }}>
@@ -79,13 +81,14 @@ export default class KonfessionCard extends Component {
             konfession={konfession}
             userSession={this.props.userSession}
           />
-          <KonfessionReaction 
+          <KonfessionCardReaction 
             konfession={konfession}
             userSession={this.props.userSession}
             // openModal={this.props.openModal}
           />
         </div>
-      </div>
+        </Link>
+      // </div>
     );
   }
 }

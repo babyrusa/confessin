@@ -6,6 +6,7 @@ body {
   --secondary:#ffdce2; 
   --third:#faf0ef;
   --text : #504658;
+  --hot: #ff66b6;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   height: 100%;
   background-color: var(--main);
@@ -269,6 +270,9 @@ textarea {
   /* align-items: center; */
 }
 .confession-card{
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
   border-radius: 20px;
   position: relative;
   padding: 20px;
@@ -276,6 +280,10 @@ textarea {
   width: 33%;
   display: flex;
   flex-direction: column;
+}
+.confession-card:hover{
+  text-decoration: none;
+  color: var(--text);
 }
 .confession-card:nth-child(even):hover{
   transform: translateY(-5px) ;
@@ -300,7 +308,8 @@ textarea {
   position: absolute;
   top: 0px;
   left : 10px;
-  font-size: xx-large;
+  opacity: 0.3;
+  font-size: 3rem;
   border-bottom: 5px solid var(--text);
 }
 .confession-body{
@@ -311,16 +320,22 @@ textarea {
   justify-content: center;
 }
 /*--------- individual confession --------- */
-
+.singlekonfession-wrapper{
+  display: flex;
+  justify-content: center;
+}
 .singlekonfession {
   background-color: rgba(255, 255, 255, 1);
-  margin: 5px;
-  padding: 28px;
+  /* margin: 5px; */
+  /* padding: 28px; */
   width : 400px;
-  /* box-shadow: #ff66b6; */
-  /* box-shadow: 0 0 20px  #ff66b6; */
-
-  /* ffb5b5 */
+  border-radius: 20px;
+  position: relative;
+  padding: 20px;
+  /* height : 400px; */
+  /* width: 33%; */
+  display: flex;
+  flex-direction: column;
 }
 .editKonfession{
 
@@ -399,14 +414,12 @@ textarea {
 
 }
 .konfession-reaction-wrapper {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  /* display: inline-block; */
   /* width: 100%; */
   /* text-align: center; */
 }
-/* .btn-reaction {
-  border: 0px;
-  transition: all 0.2s ease-in-out;
-} */
 
 .btn-circle {
   /* background-color: #ff66b6; */
@@ -416,14 +429,30 @@ textarea {
 }
 .btn-reaction {
   background-color: white;
-  border: 5px solid #fff;
+  /* border: 5px solid #fff; */
   font-size: 30px;
 }
 .btn-selected{
   background-color: #ff66b6;
   border: 3px solid #ff66b6;
 }
-
+.btn-reaction-card{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid var(--text); */
+  /* background: white; */
+  opacity: 0.3;
+}
+.btn-reaction-card:hover{
+background-color: none;
+}
+.reaction-count{
+  font-size: x-small;
+}
 /*--------- search input  --------- */
 #filter-wrapper{
   position: relative;
@@ -462,13 +491,30 @@ textarea {
 }
 .dropdown-menu {
   color : #504658;
-  border: 1px solid #ff66b6;
-  border-radius: 0px;
-  box-shadow: 0 0 5px #ff66b6;
+  border: none;
+  border-radius: 20px;
+  box-shadow:  0 3px 5px hsla(0, 0%, 0%, .2);
 
 }
 .social-butt{
   /* float : left; */
   display: inline-block;
+}
+/* MOBILE MODE */
+
+@media (max-width: 1026px) {
+  .confession-card{
+    width : 50%;
+  }
+  .confession-feed{
+    align-items: center;
+    padding: 0px 10px;
+    flex-direction: column;
+  }
+}
+@media (max-width: 600px) {
+  .confession-card{
+    width : 100%;
+  }
 }
 

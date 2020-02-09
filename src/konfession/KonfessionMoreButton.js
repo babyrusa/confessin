@@ -116,7 +116,7 @@ class KonfessionMoreButton extends Component {
   /**COPY POST LINK */
   getPostLink() {
     var textField = document.createElement('textarea')
-    textField.innerText = `https://confessin.com/confession/${this.props.konfession.attrs._id}`
+    textField.innerText = `https://confessin.com/c/${this.props.konfession.attrs._id}`
     document.body.appendChild(textField)
     textField.select()
     document.execCommand('copy')
@@ -213,7 +213,7 @@ class KonfessionMoreButton extends Component {
           <h5>Share this confession on social media</h5>
           <div>
             <FacebookShareButton
-              url={`https://confessin.com/confession/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.com/c/${this.props.konfession.attrs._id}`}
               quote="Check out this funny confession on Confessin.com"
               className="social-butt"
             >
@@ -222,7 +222,7 @@ class KonfessionMoreButton extends Component {
                 round />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://confessin.com/confession/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.com/c/${this.props.konfession.attrs._id}`}
               quote="Check out this funny confession on Confessin.com"
               className="social-butt"
             >
@@ -231,7 +231,7 @@ class KonfessionMoreButton extends Component {
                 round />
             </TwitterShareButton>
             <TelegramShareButton
-              url={`https://confessin.com/confession/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.com/c/${this.props.konfession.attrs._id}`}
               quote="Check out this funny confession on Confessin.com"
               className="social-butt"
             >
@@ -240,7 +240,7 @@ class KonfessionMoreButton extends Component {
                 round />
             </TelegramShareButton>
             <WhatsappShareButton
-              url={`https://confessin.com/confession/${this.props.konfession.attrs._id}`}
+              url={`https://confessin.com/c/${this.props.konfession.attrs._id}`}
               quote="Check out this funny confession on Confessin.com"
               className="social-butt"
             >
