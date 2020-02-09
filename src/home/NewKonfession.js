@@ -134,15 +134,18 @@ export default class NewKonfession extends Component {
             loadOptions={this.promiseOptions.bind(this)}
             onChange={this.handleCreate.bind(this)}
           /> */}
+          <div className="newkonfession-buttons">
           <AddEmoji addEmoji={this.addEmoji.bind(this)} />
           <button
-            className="btn btn-primary"
+            className="btn-primary btn-circle"
             id="add-confession-button"
             disabled={this.state.isButtonLoading}
             onClick={this.addConfession.bind(this)}
+            data-toggle="tooltip" title="Add confession"
           >
-            {!this.state.isButtonLoading ? "Add Confession" : "Loading..."}
+            {!this.state.isButtonLoading ? "+" : "..."}
           </button>
+          </div>
         </div>}
       </React.Fragment>
     );

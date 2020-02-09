@@ -19,8 +19,8 @@ export default class AddEmoji extends Component {
     return (
       <React.Fragment>
         <button
-          type="button "
-          className="btn btn-emoji"
+          type="button"
+          className="btn-primary btn-emoji btn-circle"
           data-toggle="tooltip"
           title="Insert an emoji"
           onClick={this.toggleEmojiPicker.bind(this)}
