@@ -75,7 +75,7 @@ export default class KonfessionNewComment extends Component {
           comment: ""
         });
       } catch (e) {
-        alert("cannot post comment atm");
+        // alert("cannot post comment atm");
         console.log(e);
       }
     }

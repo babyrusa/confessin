@@ -39,7 +39,8 @@ export default class KonfessionSingleComment extends Component {
         this.cancelEditComment();
         // window.location.reload(false);
       } catch (e) {
-        alert("we apologize. unable to save, try again later");
+        console.log(e)
+        // alert("we apologize. unable to save, try again later");
       }
     }
   }

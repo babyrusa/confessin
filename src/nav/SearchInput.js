@@ -38,8 +38,7 @@ export default class SearchInput extends Component {
             id="filterByPrompt"
             type="text"
             className="form-control nav-filter"
-            style={{ fontFamily: "sans-serif, FontAwesome" }}
-            placeholder="&#xF002; Filter Confessions by Hashtags"
+            placeholder="Filter Confessions by Hashtags"
             value={this.state.hashtag}
             onChange={this.onChangeHandler.bind(this)}
           />

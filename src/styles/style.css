@@ -1,14 +1,18 @@
 /* Globals */
-/* a,a:focus,a:hover{color:#000272;} */
+/* f8dce0 ,faf0ef*/
 html,
 body {
-  font-family: "Questrial", sans-serif;
+  --main:#f8dce0;
+  --secondary:#ffdce2; 
+  --third:#faf0ef;
+  --text : #504658;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   height: 100%;
-  background-color: #f0decb;
+  background-color: var(--main);
   color: #000272;
 }
 body {
-  color: #504658;
+  color: var(--text);
   text-align: center;
 }
 p {
@@ -16,8 +20,6 @@ p {
 }
 h1 {
   font-size: 2rem;
-}
-small{
 }
 .hide {
   display: none;
@@ -33,10 +35,8 @@ small{
 /* Buttons */
 .btn {
   border-radius: 0px;
-  font-family: "Questrial", sans-serif;
   padding: 0.5625rem 2.5rem;
   font-size: 1.5rem;
-  font-weight: bold;
   line-height: 1.75rem;
   border-radius: 2 !important;
   -webkit-transition: all 0.2s ease-in-out;
@@ -55,8 +55,8 @@ small{
   outline: none;
 }
 .btn-primary {
-  background-color: #ff66b6;
-  border: 1px solid #ff66b6;
+  background-color: var(--secondary);
+  border: 1px solid var(--secondary);
   color: #212529;
 }
 .btn-primary:hover,
@@ -78,11 +78,16 @@ small{
 /* .btn-primary:hover,.btn-primary:focus,.btn-primary:active{color:#fff;border:1px solid #3700FF;background-color:#3700FF; transform: translateY(-1px); box-shadow: 0 3px 5px hsla(0, 0%, 0%, .2);} */
 
 .navbar {
-  background-color: #ff66b6 !important;
+  background-color:  var(--main) !important;
+  /* position: fixed; */
+  /* top: 0; */
+  /* width: 100%; */
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
   padding : 0px;
+  text-transform: uppercase;
+
 }
 .notification-dropdown::after {
   content: none;
@@ -165,19 +170,21 @@ textarea {
 }
 .form-control, .css-yk16xz-control, .css-1pahdxg-control,.css-1pahdxg-control:focus  {
   border-radius: 0px ;
-  border: 1px solid #ff66b6 !important;
-  border-color: #ff66b6 !important;
+  /* border: 1px solid #ff66b6 !important; */
+  /* border-color: #ff66b6 !important; */
+  border: none;
+  /* border-bottom: 1px solid var(--secondary) !important; */
   outline: none !important;
-  box-shadow: 0 0 0px #ff66b6 !important;
+  box-shadow: 0 0 10px var(--secondary) !important;
 }
 .css-yk16xz-control, .css-1pahdxg-control,.css-1pahdxg-control:focus  {
   border-radius: 0px !important;
 }
 .form-control:focus, .css-yk16xz-control:focus, .css-yk16xz-control:hover,.css-1pahdxg-control:focus, .css-1pahdxg-control:hover {
   outline: none !important;
-  border: 1px solid #ff66b6;
-  border-color: #ff66b6 !important;
-  box-shadow: 0 0 10px #ff66b6 !important;
+  border: 1px solid var(--secondary);
+  border-color: var(--secondary) !important;
+  box-shadow: 0 0 10px var(--secondary) !important;
   /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
 }
 
@@ -186,8 +193,23 @@ textarea {
   padding: 5px;
   width: 100%;
 }
+.newconfession-butt{
+  right: 0;
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding : 10px;
+}
 #newconfession-wrapper {
-  width: 100%;
+  z-index: 1;
+  top: 70px;
+  right: 70px;
+  position: absolute;
+  /* width: 100%; */
   background-color: rgba(255, 255, 255, 1);
 }
 #newconfession-wrapper #add-confession-button {
@@ -237,14 +259,64 @@ textarea {
 /* .rta__autocomplete li:hover {
   background-color: skyblue;
 } */
+/*--FEED-*/
+.confession-feed{
+  padding: 0px 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  /* align-items: center; */
+}
+.confession-card{
+  border-radius: 20px;
+  position: relative;
+  padding: 20px;
+  height : 400px;
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+}
+.confession-card:nth-child(even):hover{
+  transform: translateY(-5px) ;
+  box-shadow: 0 4px 10px #fff;
+}
+.confession-card:nth-child(odd):hover{
+  transform: translateY(-5px) ;
+  box-shadow: 0 4px 10px var(--third);
+}
+.confession-card:nth-child(even) {
+  background-color: none;
+}
+.confession-card:nth-child(odd) {
+  background-color: white;
+}
+.confession-hashtags a{
+  color: var(--text) !important;
+  font-size: small;
+}
 
-
+.confession-index{
+  position: absolute;
+  top: 0px;
+  left : 10px;
+  font-size: xx-large;
+  border-bottom: 5px solid var(--text);
+}
+.confession-body{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 /*--------- individual confession --------- */
 
 .singlekonfession {
   background-color: rgba(255, 255, 255, 1);
   margin: 5px;
   padding: 28px;
+  width : 400px;
   /* box-shadow: #ff66b6; */
   /* box-shadow: 0 0 20px  #ff66b6; */
 
@@ -365,6 +437,9 @@ textarea {
   /* padding : 5px; */
   text-align: left;
 }
+#filterByPrompt{
+  border-radius: 20px !important;
+}
 .hashtag-li {
   cursor: pointer;
 }
@@ -396,3 +471,4 @@ textarea {
   /* float : left; */
   display: inline-block;
 }
+

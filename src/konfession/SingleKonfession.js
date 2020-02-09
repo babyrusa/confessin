@@ -93,7 +93,8 @@ export default class SingleKonfession extends Component {
       this.stopEditKonfession();
       // window.location.reload(false);
     } catch (e) {
-      alert("we apologize. unable to save, try again later");
+      console.log(e)
+      // alert("we apologize. unable to save, try again later");
     }
   }
 

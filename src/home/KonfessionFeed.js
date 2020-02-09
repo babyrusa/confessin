@@ -4,6 +4,7 @@ import SingleKonfession from "../konfession/SingleKonfession";
 import Hashtag from "../models/Hashtag";
 import NewKonfession from "./NewKonfession.js";
 import { Dot } from "react-animated-dots";
+import KonfessionCard from "./KonfessionCard";
 
 export default class KonfessionFeed extends Component {
   constructor(props) {
@@ -101,16 +102,18 @@ export default class KonfessionFeed extends Component {
             />
           )}
           {!this.state.isLoading && this.state.allKonfessions.length !== 0 ? (
-            <div>
+            <div className="confession-feed">
               {this.state.allKonfessions.map(konfession => {
                 return (
-                  <SingleKonfession
-                    key={konfession.attrs._id}
-                    konfession={konfession}
-                    userSession={this.props.userSession}
-                    fetchKonfessions={this.fetchKonfessions.bind(this)}
-                    openModal={this.props.openModal}
-                  />
+                  <KonfessionCard konfession = {konfession}
+                  userSession={this.props.userSession}/>
+                  // <SingleKonfession
+                  //   key={konfession.attrs._id}
+                  //   konfession={konfession}
+                  //   userSession={this.props.userSession}
+                  //   fetchKonfessions={this.fetchKonfessions.bind(this)}
+                  //   openModal={this.props.openModal}
+                  // />
                 );
               })}
               <div style={{ width: "100%" }}></div>

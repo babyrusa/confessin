@@ -7,6 +7,7 @@ import "@webscopeio/react-textarea-autocomplete/style.css";
 import Hashtag from "../models/Hashtag";
 import CreatableSelect from "react-select/creatable";
 import AsyncCreatableSelect from "react-select/async-creatable";
+import { Edit3 } from "react-feather";
 
 export default class NewKonfession extends Component {
   constructor(props) {
@@ -17,8 +18,15 @@ export default class NewKonfession extends Component {
       topic: "",
       topics: [],
       isButtonLoading: false,
-      isLoading: false
+      isLoading: false,
+      showInput : false,
     };
+  }
+
+  onShowInput(){
+    this.setState({
+      showInput : !this.state.showInput
+    })
   }
   onConfessionChange(e) {
     this.setState({
@@ -86,7 +94,8 @@ export default class NewKonfession extends Component {
         this.props.fetchKonfessions();
       } catch (e) {
         this.setState({ isButtonLoading: false });
-        alert("We apologize. Unable to create new confession. Try again later");
+        console.log(e);
+        // alert("We apologize. Unable to create new confession. Try again later");
       }
     }
   }
@@ -100,9 +109,13 @@ export default class NewKonfession extends Component {
     const { isLoading } = this.state;
     return (
       <React.Fragment>
-        <div className="row">
-        <div className="col-md-10 col-lg-10 col-xl-6 mx-auto">
-        <div id="newconfession-wrapper">
+        {/* <div className="col-md-10 col-lg-10 col-xl-6 mx-auto"> */}
+        <button className="btn btn-light newconfession-butt" 
+        data-toggle="tooltip" title="Spill some tea"
+        onClick={this.onShowInput.bind(this)}>
+          <Edit3 size={30}/>
+        </button>
+        {this.state.showInput && <div id="newconfession-wrapper">
           <div id="newconfession-textarea">
             <textarea
               className="form-control"
@@ -113,14 +126,14 @@ export default class NewKonfession extends Component {
               placeholder="Spill some tea. Don't worry, no one knows your identity but you!"
             ></textarea>
           </div>
-          <AsyncCreatableSelect
+          {/* <AsyncCreatableSelect
             isMulti
             cacheOptions
             defaultOptions
             placeholder = "Add topics"
             loadOptions={this.promiseOptions.bind(this)}
             onChange={this.handleCreate.bind(this)}
-          />
+          /> */}
           <AddEmoji addEmoji={this.addEmoji.bind(this)} />
           <button
             className="btn btn-primary"
@@ -130,9 +143,7 @@ export default class NewKonfession extends Component {
           >
             {!this.state.isButtonLoading ? "Add Confession" : "Loading..."}
           </button>
-        </div>
-        </div>
-        </div>
+        </div>}
       </React.Fragment>
     );
   }

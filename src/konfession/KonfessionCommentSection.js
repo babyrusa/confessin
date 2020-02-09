@@ -42,7 +42,8 @@ export default class KonfessionCommentSection extends Component {
         comments: _comments.reverse()
       });
     } catch (e) {
-      alert("there is an error, please try again later");
+      console.log(e);
+      // alert("there is an error, please try again later");
     }
   }
 

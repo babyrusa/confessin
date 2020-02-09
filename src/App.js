@@ -13,11 +13,11 @@ config.logLevel = "none";
 
 const appConfig = new AppConfig(["store_write", "publish_data"]);
 const userSession = new UserSession({ appConfig: appConfig });
-
-const apiServer =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "https://confessin-server.herokuapp.com";
+const apiServer = "https://confessin-server.herokuapp.com";
+// const apiServer =
+//   process.env.NODE_ENV === "development"
+//     ? "http://localhost:5000"
+//     : "https://confessin-server.herokuapp.com";
 configure({
   apiServer: apiServer,
   userSession
