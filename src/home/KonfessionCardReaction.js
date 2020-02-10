@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Reaction from "../models/Reaction";
 import { User } from "radiks/lib";
+import Comment from "../models/Comment";
 
 export default class KonfessionCardReaction extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class KonfessionCardReaction extends Component {
       virtueCount: 0,
       sinCount: 0,
       deadlySinCount: 0,
+      commentCount: 0,
       selfReaction: {
         attrs: {
           _id: "",
@@ -21,10 +23,12 @@ export default class KonfessionCardReaction extends Component {
   }
   componentDidMount() {
     this.fetchReactions();
+    this.fetchCommentCount();
   }
   componentDidUpdate(prevProps) {
     if (prevProps.konfession !== this.props.konfession) {
       this.fetchReactions();
+      this.fetchCommentCount();
     }
   }
   async fetchReactions() {
@@ -78,7 +82,21 @@ export default class KonfessionCardReaction extends Component {
     });
   }
   
-
+  async fetchCommentCount(){
+    try {
+      let _commentCount = await Comment.count(
+        {
+          konfessionId: this.props.konfession.attrs._id,
+        },
+        { decrypt: this.props.userSession.isUserSignedIn()  }
+      );
+      this.setState({
+        commentCount: _commentCount
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -129,6 +147,19 @@ export default class KonfessionCardReaction extends Component {
               title="Deadly Sin"
             >
               💀
+            </button>
+          </div>
+          <div className="konfession-reaction">
+            <div className="reaction-count">{this.state.commentCount}</div>
+            <button
+              className={
+                "btn-primary btn-reaction-card "
+              }
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Comments"
+            >
+              💬
             </button>
           </div>
         </div>
