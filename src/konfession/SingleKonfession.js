@@ -104,6 +104,7 @@ export default class SingleKonfession extends Component {
 
   render() {
     const { konfession } = this.state;
+    const length = konfession.attrs.text.length;
 
     return (
       <div className="singlekonfession-wrapper">
@@ -129,65 +130,73 @@ export default class SingleKonfession extends Component {
               editKonfession={this.editKonfession.bind(this)}
             />
             {/* <div> */}
-              <span className="confession-index">
-                {konfession.attrs.index}
-                &#46;
-              </span>
-              <div className="confession-top">
-                <small style={{ padding: "5px" }}>
-                  {TimeStamp.convertDate(
-                    konfession.attrs.createdAt
-                  ).toUpperCase()}
-                </small>
+            <span className="confession-index">
+              {konfession.attrs.index}
+              &#46;
+            </span>
+            <div className="confession-top">
+              <small style={{ padding: "5px" }}>
+                {TimeStamp.convertDate(
+                  konfession.attrs.createdAt
+                ).toUpperCase()}
+              </small>
 
-                <small style={{ padding: "5px" }}>
-                  {this.state.konfession.attrs.updatedAt !==
-                  this.state.konfession.attrs.createdAt
-                    ? "Edited"
-                    : ""}
-                </small>
-              </div>
-              <div className="confession-body">
-                {!this.state.editMode ? (
-                  <div>
-                    <i className="fas fa-quote-left"></i>
-                    <h1>{this.state.konfession.attrs.text}</h1>
-                    <i className="fas fa-quote-right"></i>
-                  </div>
-                ) : (
-                  <div>
-                    <textarea
-                      maxLength="63206"
-                      rows="5"
-                      className="form-control editKonfession"
-                      value={this.state.editedKonfession}
-                      onChange={this.onEditKonfession.bind(this)}
-                    ></textarea>
-                    <button
-                      className="btn btn-primary"
-                      onClick={this.saveEdittedKonfession.bind(this)}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="btn btn-outline-secondary"
-                      onClick={this.stopEditKonfession.bind(this)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                )}
-              </div>
-            {/* </div> */}
-            <KonfessionHashtag
-              konfession={this.state.konfession}
-              userSession={this.props.userSession}
-            />
-            <KonfessionReaction
-              konfession={this.state.konfession}
-              userSession={this.props.userSession}
-              openModal={this.props.openModal}
-            />
+              <small style={{ padding: "5px" }}>
+                {this.state.konfession.attrs.updatedAt !==
+                this.state.konfession.attrs.createdAt
+                  ? "Edited"
+                  : ""}
+              </small>
+            </div>
+            <div className="confession-body">
+              {!this.state.editMode ? (
+                <div>
+                  <i className="fas fa-quote-left"></i>
+                  <h3
+                    style={{
+                      fontSize: length > 150 ? "15px" : "20px",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    {konfession.attrs.text}
+                  </h3>
+                  <i className="fas fa-quote-right"></i>
+                </div>
+              ) : (
+                <div>
+                  <textarea
+                    maxLength="63206"
+                    rows="5"
+                    className="form-control editKonfession"
+                    value={this.state.editedKonfession}
+                    onChange={this.onEditKonfession.bind(this)}
+                  ></textarea>
+                  <button
+                    className="btn btn-primary"
+                    onClick={this.saveEdittedKonfession.bind(this)}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-outline-secondary"
+                    onClick={this.stopEditKonfession.bind(this)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              )}
+              {/* </div> */}
+              <KonfessionHashtag
+                konfession={this.state.konfession}
+                userSession={this.props.userSession}
+              />
+              <KonfessionReaction
+                konfession={this.state.konfession}
+                userSession={this.props.userSession}
+                openModal={this.props.openModal}
+              />
+            </div>
+
             <KonfessionCommentSection
               konfession={this.state.konfession}
               userSession={this.props.userSession}

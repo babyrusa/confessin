@@ -56,13 +56,6 @@ export default class KonfessionCard extends Component {
             </div>
           ) : (
             <div>
-              {/* <textarea
-            maxLength="63206"
-            rows="5"
-            className="form-control editKonfession"
-            value={this.state.editedKonfession}
-            onChange={this.onEditKonfession.bind(this)}
-          ></textarea> */}
               <button
                 className="btn btn-primary"
                 onClick={this.saveEdittedKonfession.bind(this)}
