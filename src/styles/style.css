@@ -446,6 +446,9 @@ textarea {
   background-color: white;
   /* border: 5px solid #fff; */
   font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btn-selected{
   background-color: #ff66b6;
