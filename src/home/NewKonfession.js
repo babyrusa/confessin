@@ -88,7 +88,8 @@ export default class NewKonfession extends Component {
           confession: "",
           topics: [],
           topic: "",
-          isButtonLoading: false
+          isButtonLoading: false,
+          showInput : false
         });
         // this.props.history.push(`/`)
         this.props.fetchKonfessions();
