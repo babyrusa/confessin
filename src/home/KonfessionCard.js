@@ -5,6 +5,7 @@ import { Dot } from "react-animated-dots";
 import KonfessionHashtag from "../konfession/KonfessionHashtag";
 import { Link } from "react-router-dom";
 import KonfessionCardReaction from "./KonfessionCardReaction";
+import { MapPin } from "react-feather";
 
 export default class KonfessionCard extends Component {
   constructor(props) {
@@ -36,10 +37,12 @@ export default class KonfessionCard extends Component {
           &#46;
         </span>
         <div className="confession-top">
+          {konfession.attrs.latitude && konfession.attrs.longitude && <small data-toggle="tooltip" title="Location set" className="card-location">
+            <MapPin/>
+          </small>}
           <small style={{ padding: "5px" }}>
             {TimeStamp.convertDate(konfession.attrs.createdAt).toUpperCase()}
           </small>
-
           <small style={{ padding: "5px" }}>
             {this.state.konfession.attrs.updatedAt !==
             this.state.konfession.attrs.createdAt

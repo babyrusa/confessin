@@ -20,6 +20,7 @@ export default class NewKonfession extends Component {
       isButtonLoading: false,
       isLoading: false,
       showInput : false,
+      setLocation : false,
     };
   }
 
@@ -63,7 +64,36 @@ export default class NewKonfession extends Component {
   }
 
 
-  async addConfession() {
+  addConfession() {
+    if(this.state.setLocation){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.createKonfessionWithLocation.bind(this));
+      } else {
+        alert("Unable to get your location")
+        // console.log("not geo")
+      }
+    } else {
+      this.createKonfessionWithoutLocation();
+    }
+  }
+
+  onSetLocation(e){
+    console.log(e.target.checked)
+    this.setState({
+      setLocation : e.target.checked  
+    })
+  }
+
+  getLocation(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.print);
+    } else {
+      alert("Unable to get your location")
+      // console.log("not geo")
+    }
+  }
+
+  async createKonfessionWithLocation(location){
     if (this.state.confession.trim() !== "") {
       this.setState({ isButtonLoading: true });
       const { userSession } = this.props;
@@ -71,10 +101,13 @@ export default class NewKonfession extends Component {
         {sort: "-createdAt", limit : 1, },
         { decrypt: this.props.userSession.isUserSignedIn() });
       try {
+        console.log(location.coords);
         const konfession = new Konfession({
           username: userSession.loadUserData().username,
           text: this.state.confession,
-          index: totalConf.length > 0 ? (Number(totalConf[0].attrs.index)+1) : 1 
+          index: totalConf.length > 0 ? (Number(totalConf[0].attrs.index)+1) : 1 ,
+          latitude : location.coords.latitude,
+          longitude : location.coords.longitude
         });
         await konfession.save();
         for (let i = 0; i < this.state.topics.length; i++) {
@@ -96,11 +129,51 @@ export default class NewKonfession extends Component {
       } catch (e) {
         this.setState({ isButtonLoading: false });
         console.log(e);
-        // alert("We apologize. Unable to create new confession. Try again later");
       }
     }
   }
-
+  async createKonfessionWithoutLocation(){
+    console.log("without locaiton")
+    if (this.state.confession.trim() !== "") {
+      this.setState({ isButtonLoading: true });
+      const { userSession } = this.props;
+      const totalConf = await Konfession.fetchList(
+        {sort: "-createdAt", limit : 1, },
+        { decrypt: this.props.userSession.isUserSignedIn() });
+      try {
+        const konfession = new Konfession({
+          username: userSession.loadUserData().username,
+          text: this.state.confession,
+          index: totalConf.length > 0 ? (Number(totalConf[0].attrs.index)+1) : 1 ,
+        });
+        await konfession.save();
+        for (let i = 0; i < this.state.topics.length; i++) {
+          const hashtag = new Hashtag({
+            konfessionId: konfession._id,
+            text: this.state.topics[i].value
+          });
+          await hashtag.save();
+        }
+        this.setState({
+          confession: "",
+          topics: [],
+          topic: "",
+          isButtonLoading: false,
+          showInput : false
+        });
+        // this.props.history.push(`/`)
+        this.props.fetchKonfessions();
+      } catch (e) {
+        this.setState({ isButtonLoading: false });
+        console.log(e);
+      }
+    }
+  }
+  print(location){
+    // console.log(Distance.getDistanceFromLatLonInKm(location.coords.latitude, location.coords.longitude,location.coords.latitude, location.coords.longitude))
+    console.log(location.coords.latitude, location.coords.longitude)
+    return location.coords;
+  }
   render() {
     const colourOptions = [
       { label: "blue", value: "blue" },
@@ -126,6 +199,12 @@ export default class NewKonfession extends Component {
               onChange={this.onConfessionChange.bind(this)}
               placeholder="Spill some tea. Don't worry, no one knows your identity but you!"
             ></textarea>
+            <label className="switch">
+              Location
+              <input type="checkbox" checked={this.state.setLocation} onChange={e => this.onSetLocation(e)}/>
+              <span className="slider round"></span>
+            </label>
+
           </div>
           {/* <AsyncCreatableSelect
             isMulti

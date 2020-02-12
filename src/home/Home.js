@@ -4,6 +4,7 @@ import { Person, lookupProfile } from "blockstack";
 import NewKonfession from "./NewKonfession.js";
 import KonfessionFeed from "./KonfessionFeed.js";
 import SignInNoticeModal from "../shared/SignInNoticeModal.js";
+import Distance from "../shared/distance.js";
 
 export default class Home extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class Home extends Component {
   closeModal(){
     this.setState({modalIsOpen: false});	
   }
+  
   render() {
     return (
       <React.Fragment>
