@@ -6,6 +6,7 @@ import KonfessionHashtag from "../konfession/KonfessionHashtag";
 import { Link } from "react-router-dom";
 import KonfessionCardReaction from "./KonfessionCardReaction";
 import { MapPin } from "react-feather";
+import Distance from "../shared/distance";
 
 export default class KonfessionCard extends Component {
   constructor(props) {
@@ -25,6 +26,21 @@ export default class KonfessionCard extends Component {
       },
       editedKonfession: ""
     };
+  }
+  componentDidMount(){
+    this.getLatLong();
+  }
+  componentDidUpdate(prevProps){
+    if(prevProps.konfession !== this.props.konfession){
+      this.getLatLong();
+    }
+  }
+  getLatLong(){
+    const { konfession } = this.props;
+    if (konfession.attrs.latitude && konfession.attrs.longitude){
+      const {latitude , longitude} = Distance.getLatLonFromDistance(konfession.attrs.latitude , konfession.attrs.longitude, 1);
+      console.log(konfession.attrs.latitude , konfession.attrs.longitude , latitude, longitude);
+    }
   }
   render() {
     const { konfession } = this.props;

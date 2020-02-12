@@ -5,6 +5,7 @@ import Hashtag from "../models/Hashtag";
 import NewKonfession from "./NewKonfession.js";
 import { Dot } from "react-animated-dots";
 import KonfessionCard from "./KonfessionCard";
+import DistanceFilter from "./DistanceFilter";
 
 export default class KonfessionFeed extends Component {
   constructor(props) {
@@ -95,6 +96,7 @@ export default class KonfessionFeed extends Component {
 
     return (
       <React.Fragment>
+        <DistanceFilter/>
           {userSession.isUserSignedIn() && !this.props.match && (
             <NewKonfession
               userSession={this.props.userSession}
