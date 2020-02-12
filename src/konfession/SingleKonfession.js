@@ -73,8 +73,10 @@ export default class SingleKonfession extends Component {
     }
   }
   editKonfession() {
+    const { konfession } = this.state;
+
     this.setState({
-      editedKonfession: this.props.konfession.attrs.text,
+      editedKonfession: konfession.attrs.text,
       editMode: true
     });
   }
@@ -89,11 +91,13 @@ export default class SingleKonfession extends Component {
     });
   }
   async saveEdittedKonfession() {
+    const { konfession } = this.state;
+
     try {
-      this.props.konfession.update({
+      konfession.update({
         text: this.state.editedKonfession
       });
-      await this.props.konfession.save();
+      await konfession.save();
       this.stopEditKonfession();
       // window.location.reload(false);
     } catch (e) {

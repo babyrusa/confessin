@@ -30,7 +30,7 @@ export default class KonfessionCard extends Component {
     const length = konfession.attrs.text.length;
     return (
       // <div className="confession-card">
-        <Link to={`/c/${konfession.attrs._id}`} className="confession-card">
+      <Link to={`/c/${konfession.attrs._id}`} className="confession-card">
         <span className="confession-index">
           {konfession.attrs.index}
           &#46;
@@ -41,46 +41,35 @@ export default class KonfessionCard extends Component {
           </small>
 
           <small style={{ padding: "5px" }}>
-            {this.state.konfession.attrs.updatedAt !==
-            this.state.konfession.attrs.createdAt
+            {konfession.attrs.updatedAt !== konfession.attrs.createdAt
               ? "Edited"
               : ""}
           </small>
         </div>
         <div className="confession-body">
-          {!this.state.editMode ? (
-            <div>
-              <i className="fas fa-quote-left"></i>
-              <h3 style={{fontSize : length > 150 ? "15px" : "20px", fontWeight : "bold"}}>{konfession.attrs.text}</h3>
-              <i className="fas fa-quote-right"></i>
-            </div>
-          ) : (
-            <div>
-              <button
-                className="btn btn-primary"
-                onClick={this.saveEdittedKonfession.bind(this)}
-              >
-                Save
-              </button>
-              <button
-                className="btn btn-outline-secondary"
-                onClick={this.stopEditKonfession.bind(this)}
-              >
-                Cancel
-              </button>
-            </div>
-          )}
+          <div>
+            <i className="fas fa-quote-left"></i>
+            <h3
+              style={{
+                fontSize: length > 150 ? "15px" : "20px",
+                fontWeight: "bold"
+              }}
+            >
+              {konfession.attrs.text}
+            </h3>
+            <i className="fas fa-quote-right"></i>
+          </div>
           <KonfessionHashtag
             konfession={konfession}
             userSession={this.props.userSession}
           />
-          <KonfessionCardReaction 
+          <KonfessionCardReaction
             konfession={konfession}
             userSession={this.props.userSession}
             // openModal={this.props.openModal}
           />
         </div>
-        </Link>
+      </Link>
       // </div>
     );
   }
