@@ -65,6 +65,10 @@ export default class NewKonfession extends Component {
 
   async addConfession() {
     if (this.state.confession.trim() !== "") {
+      const hashtags = this.state.confession.match(/\#\w+\b/g);
+      for(let hashtag of hashtags){
+        console.log(hashtag);
+      }
       this.setState({ isButtonLoading: true });
       const { userSession } = this.props;
       const totalConf = await Konfession.fetchList(
@@ -77,12 +81,16 @@ export default class NewKonfession extends Component {
           index: totalConf.length > 0 ? (Number(totalConf[0].attrs.index)+1) : 1 
         });
         await konfession.save();
-        for (let i = 0; i < this.state.topics.length; i++) {
-          const hashtag = new Hashtag({
-            konfessionId: konfession._id,
-            text: this.state.topics[i].value
-          });
-          await hashtag.save();
+        let addedHashtag = [];
+        for (let _hashtag of hashtags) {
+          if (!addedHashtag.includes(_hashtag)){
+            const hashtag = new Hashtag({
+              konfessionId: konfession._id,
+              text: _hashtag.replace('#','')
+            });
+            await hashtag.save();
+            addedHashtag.push(_hashtag);
+          }
         }
         this.setState({
           confession: "",
