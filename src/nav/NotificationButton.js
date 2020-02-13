@@ -99,7 +99,7 @@ export default class NotificationButton extends Component {
             {this.state.notifcations.length > 0 ? (
               this.state.notifcations.map(noti => {
                 return (
-                  <Link to={`/confession/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
+                  <Link to={`/c/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
 
                   <div className="dropdown-item noti-unread" >
                     You have a new <b>{noti.attrs.text}</b> at confession "

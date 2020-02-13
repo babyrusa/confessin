@@ -87,9 +87,9 @@ h1 {
   -moz-border-radius: 0;
   border-radius: 0;
   padding : 0px;
-  text-transform: uppercase;
 }
 .navbar-brand {
+  text-transform: uppercase;
 color: var(--text) !important;
 }
 .notification-dropdown::after {
@@ -102,7 +102,7 @@ color: var(--text) !important;
   padding : 20px;
 }
 .noti-unread {
-  background-color: #f8cbe3;
+  background-color: white;
 }
 .dropdown-menu a {
   text-decoration: none;
