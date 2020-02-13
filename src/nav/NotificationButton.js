@@ -4,9 +4,9 @@ import Reaction from "../models/Reaction";
 import Konfession from "../models/Konfession";
 import Notification from "../models/Notification";
 import TimeStamp from "../shared/timestamp.js";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-export default class NotificationButton extends Component {
+class NotificationButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,6 +81,15 @@ export default class NotificationButton extends Component {
     //make self-notification model
     //
   }
+  async onClickConfession(noti){
+    if (!noti.checked) {
+      noti.update({
+        checked : true
+      })
+      await noti.save()
+    }
+    await this.props.history.push(`/c/${noti.attrs.konfessionId}`)
+  }
   render() {
     return (
       <div className="nav-link">
@@ -99,16 +108,16 @@ export default class NotificationButton extends Component {
             {this.state.notifcations.length > 0 ? (
               this.state.notifcations.map(noti => {
                 return (
-                  <Link to={`/c/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
+                  // <Link to={`/c/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
 
-                  <div className="dropdown-item noti-unread" >
+                  <div className={"dropdown-item " + (noti.attrs.checked ? "noti-read" : "noti-unread")} onClick={this.onClickConfession.bind(this, noti)}>
                     You have a new <b>{noti.attrs.text}</b> at confession "
                     <i>{noti.attrs.konfessionPreview}...</i>" &nbsp;
                     <small>
                       {TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}
                     </small>
                   </div>
-                  </Link>
+                  // </Link>
 
                 );
               })
@@ -121,3 +130,4 @@ export default class NotificationButton extends Component {
     );
   }
 }
+export default withRouter(NotificationButton);

@@ -5,6 +5,7 @@ body {
   --main:#f8dce0;
   --secondary:#ffdce2; 
   --third:#faf0ef;
+  --fourth : #fdebee;
   --text : #504658;
   --hot: #ff66b6;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
@@ -92,6 +93,9 @@ h1 {
   text-transform: uppercase;
 color: var(--text) !important;
 }
+.notification-dropdown{
+  background-color: transparent;
+}
 .notification-dropdown::after {
   content: none;
 }
@@ -100,9 +104,13 @@ color: var(--text) !important;
 }
 .notification-wrapper .dropdown-item {
   padding : 20px;
+  border-radius: 20px;
+}
+.noti-read {
+  background-color: #fdfdfd;
 }
 .noti-unread {
-  background-color: white;
+  background-color: var(--fourth);
 }
 .dropdown-menu a {
   text-decoration: none;
