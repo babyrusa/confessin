@@ -29,8 +29,8 @@ export default class KonfessionCard extends Component {
     const { konfession } = this.props;
     const length = konfession.attrs.text.length;
     return (
-      // <div className="confession-card">
-      <Link to={`/c/${konfession.attrs._id}`} className="confession-card">
+      <div className="confession-card">
+        {/* <Link to={`/c/${konfession.attrs._id}`} className="confession-card"> */}
         <span className="confession-index">
           {konfession.attrs.index}
           &#46;
@@ -47,7 +47,7 @@ export default class KonfessionCard extends Component {
           </small>
         </div>
         <div className="confession-body">
-          <div>
+          <Link to={`/c/${konfession.attrs._id}`}>
             <i className="fas fa-quote-left"></i>
             <h3
               style={{
@@ -58,7 +58,7 @@ export default class KonfessionCard extends Component {
               {konfession.attrs.text}
             </h3>
             <i className="fas fa-quote-right"></i>
-          </div>
+          </Link>
           <KonfessionHashtag
             konfession={konfession}
             userSession={this.props.userSession}
@@ -69,8 +69,8 @@ export default class KonfessionCard extends Component {
             // openModal={this.props.openModal}
           />
         </div>
-      </Link>
-      // </div>
+        {/* </Link> */}
+      </div>
     );
   }
 }
