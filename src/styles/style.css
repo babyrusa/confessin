@@ -112,6 +112,16 @@ color: var(--text) !important;
 .noti-unread {
   background-color: var(--fourth);
 }
+.notis {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.noti-trash{
+  /* cursor: pointer; */
+  padding-right : 10px;
+  color : var(--main);
+}
 .dropdown-menu a {
   text-decoration: none;
 }
