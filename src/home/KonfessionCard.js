@@ -25,6 +25,23 @@ export default class KonfessionCard extends Component {
       editedKonfession: ""
     };
   }
+  renderWithHashtags(){
+    const { konfession } = this.props;
+
+    const regex = /\#\w+\b/g;
+    let text = konfession.attrs.text;
+    console.log(text)
+    let hashtags = text.match(/\#\w+\b/g);
+    console.log(hashtags)
+    // text = text.replace(regex, "<Link to='/signin'>hello<a>")
+    let parts = text.split(regex) // re is a matching regular expression
+    console.log(parts);
+    for (let i = 0; i < parts.length; i++) {
+      parts[i] = parts[i] + <Link to={'/hashtag/' + parts[i]}>{parts[i]}</Link>
+    }
+    // return parts
+    return text;
+  }
   render() {
     const { konfession } = this.props;
     const length = konfession.attrs.text.length;
@@ -47,7 +64,8 @@ export default class KonfessionCard extends Component {
           </small>
         </div>
         <div className="confession-body">
-          <Link to={`/c/${konfession.attrs._id}`}>
+          <div>
+          {/* <Link to={`/c/${konfession.attrs._id}`}> */}
             <i className="fas fa-quote-left"></i>
             <h3
               style={{
@@ -55,10 +73,13 @@ export default class KonfessionCard extends Component {
                 fontWeight: "bold"
               }}
             >
-              {konfession.attrs.text}
+              {/* {konfession.attrs.text} */}
+              {this.renderWithHashtags()}
+
             </h3>
             <i className="fas fa-quote-right"></i>
-          </Link>
+          {/* </Link> */}
+          </div>
           <KonfessionHashtag
             konfession={konfession}
             userSession={this.props.userSession}
