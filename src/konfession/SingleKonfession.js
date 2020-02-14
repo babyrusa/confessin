@@ -6,6 +6,7 @@ import KonfessionCommentSection from "./KonfessionCommentSection";
 import KonfessionHashtag from "./KonfessionHashtag";
 import KonfessionMoreButton from "./KonfessionMoreButton";
 import { Dot } from "react-animated-dots";
+import { Link } from "react-router-dom";
 
 export default class SingleKonfession extends Component {
   constructor(props) {
@@ -105,7 +106,21 @@ export default class SingleKonfession extends Component {
       // alert("we apologize. unable to save, try again later");
     }
   }
+  renderWithHashtags(){
+    const { konfession } = this.state;
 
+    const regex = /\#\w+\b/g;
+    let text = konfession.attrs.text;
+    let hashtags = text.match(regex);
+    let parts = text.split(regex) // re is a matching regular expression
+    let toReturn = JSON.parse(JSON.stringify(parts));
+    for (let i = 0; i < (parts.length-1); i++) {
+      console.log(hashtags[i])
+      toReturn.splice(i+1,0,<Link to={'/hashtag/' + hashtags[i].replace("#",'')}>{hashtags[i]}</Link>)
+      // parts[i] = <Link to={'/hashtag/' + hashtags[i].replace("#",'')}>{hashtags[i]}</Link>
+    }
+    return toReturn;
+  }
   render() {
     const { konfession } = this.state;
     const length = konfession.attrs.text.length;
@@ -133,7 +148,6 @@ export default class SingleKonfession extends Component {
               fetchKonfessions={this.props.fetchKonfessions}
               editKonfession={this.editKonfession.bind(this)}
             />
-            {/* <div> */}
             <span className="confession-index">
               {konfession.attrs.index}
               &#46;
@@ -162,7 +176,8 @@ export default class SingleKonfession extends Component {
                       fontWeight: "bold"
                     }}
                   >
-                    {konfession.attrs.text}
+                    {/* {konfession.attrs.text} */}
+                    {this.renderWithHashtags()}
                   </h3>
                   <i className="fas fa-quote-right"></i>
                 </div>
@@ -189,11 +204,10 @@ export default class SingleKonfession extends Component {
                   </button>
                 </div>
               )}
-              {/* </div> */}
-              <KonfessionHashtag
+              {/* <KonfessionHashtag
                 konfession={this.state.konfession}
                 userSession={this.props.userSession}
-              />
+              /> */}
               <KonfessionReaction
                 konfession={this.state.konfession}
                 userSession={this.props.userSession}

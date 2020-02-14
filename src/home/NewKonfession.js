@@ -66,9 +66,9 @@ export default class NewKonfession extends Component {
   async addConfession() {
     if (this.state.confession.trim() !== "") {
       const hashtags = this.state.confession.match(/\#\w+\b/g);
-      for(let hashtag of hashtags){
-        console.log(hashtag);
-      }
+      // for(let hashtag of hashtags){
+      //   console.log(hashtag);
+      // }
       this.setState({ isButtonLoading: true });
       const { userSession } = this.props;
       const totalConf = await Konfession.fetchList(

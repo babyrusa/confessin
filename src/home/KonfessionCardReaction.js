@@ -104,6 +104,7 @@ export default class KonfessionCardReaction extends Component {
    * @param {*} reactionType
    */
   async saveReaction(reactionType) {
+    // e.preventDefault();
     const { userSession } = this.props;
     
     if (userSession.isUserSignedIn()) {
@@ -187,7 +188,7 @@ export default class KonfessionCardReaction extends Component {
     const {konfession} = this.props;
     return (
       <React.Fragment>
-        <div className="konfession-reaction-wrapper ikonfess">
+        <div className="konfession-card-reaction konfession-reaction-wrapper ikonfess">
           <div className="konfession-reaction">
             <div className="reaction-count">{this.state.virtueCount}</div>
             <button

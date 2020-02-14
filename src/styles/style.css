@@ -338,6 +338,9 @@ a:hover{
   color: var(--text) !important;
   font-size: small;
 }
+.hashtag{
+  z-index: 2;
+}
 
 .confession-index{
   position: absolute;
@@ -475,6 +478,7 @@ a:hover{
   border: 3px solid #ff66b6;
 }
 .btn-reaction-card{
+  z-index: 2;
   width: 40px;
   height: 40px;
   border-radius: 50%;
