@@ -487,7 +487,7 @@ a:hover{
   align-items: center;
   /* border: 1px solid var(--text); */
   /* background: white; */
-  opacity: 0.3;
+  /* opacity: 0.3; */
 }
 .btn-reaction-card:hover{
 background-color: none;
