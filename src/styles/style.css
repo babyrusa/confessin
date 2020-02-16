@@ -5,6 +5,7 @@ body {
   --main:#f8dce0;
   --secondary:#ffdce2; 
   --third:#faf0ef;
+  --fourth : #fdebee;
   --text : #504658;
   --hot: #ff66b6;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
@@ -87,10 +88,13 @@ h1 {
   -moz-border-radius: 0;
   border-radius: 0;
   padding : 0px;
-  text-transform: uppercase;
 }
 .navbar-brand {
+  text-transform: uppercase;
 color: var(--text) !important;
+}
+.notification-dropdown{
+  background-color: transparent;
 }
 .notification-dropdown::after {
   content: none;
@@ -100,9 +104,23 @@ color: var(--text) !important;
 }
 .notification-wrapper .dropdown-item {
   padding : 20px;
+  border-radius: 20px;
+}
+.noti-read {
+  background-color: #fdfdfd;
 }
 .noti-unread {
-  background-color: #f8cbe3;
+  background-color: var(--fourth);
+}
+.notis {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.noti-trash{
+  /* cursor: pointer; */
+  padding-right : 10px;
+  color : var(--main);
 }
 .dropdown-menu a {
   text-decoration: none;
@@ -285,8 +303,6 @@ textarea {
   /* align-items: center; */
 }
 .confession-card{
-  text-decoration: none;
-  color: var(--text);
   cursor: pointer;
   border-radius: 20px;
   position: relative;
@@ -296,7 +312,11 @@ textarea {
   display: flex;
   flex-direction: column;
 }
-.confession-card:hover{
+a{
+  text-decoration: none;
+  color: var(--text);
+}
+a:hover{
   text-decoration: none;
   color: var(--text);
 }
@@ -324,6 +344,9 @@ textarea {
 .confession-hashtags a{
   color: var(--text) !important;
   font-size: small;
+}
+.hashtag{
+  z-index: 2;
 }
 
 .confession-index{
@@ -462,6 +485,7 @@ textarea {
   border: 3px solid #ff66b6;
 }
 .btn-reaction-card{
+  z-index: 2;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -470,7 +494,7 @@ textarea {
   align-items: center;
   /* border: 1px solid var(--text); */
   /* background: white; */
-  opacity: 0.3;
+  /* opacity: 0.3; */
 }
 .btn-reaction-card:hover{
 background-color: none;

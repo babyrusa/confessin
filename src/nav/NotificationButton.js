@@ -4,27 +4,27 @@ import Reaction from "../models/Reaction";
 import Konfession from "../models/Konfession";
 import Notification from "../models/Notification";
 import TimeStamp from "../shared/timestamp.js";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-export default class NotificationButton extends Component {
+class NotificationButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: "",
       notifcations: [],
-      notiOpen : false,
+      notiOpen: false
     };
   }
   async fetchNotifications() {
-    if(this.state.notiOpen) {
+    if (this.state.notiOpen) {
       this.setState({
-        notiOpen : false
+        notiOpen: false
       });
     } else {
       let _notis = await Notification.fetchOwnList();
       this.setState({
         notifcations: _notis.reverse(),
-        notiOpen : true
+        notiOpen: true
       });
       this.loadNewNoti();
     }
@@ -46,7 +46,9 @@ export default class NotificationButton extends Component {
       });
       for (let j = 0; j < _reactions.length; j++) {
         //TODO
-        if (_reactions[j].attrs.username !== userSession.loadUserData().username) {
+        if (
+          _reactions[j].attrs.username !== userSession.loadUserData().username
+        ) {
           const _noti = new Notification({
             text: _reactions[j].attrs.type + " reaction",
             konfessionId: _reactions[j].attrs.konfessionId,
@@ -63,7 +65,9 @@ export default class NotificationButton extends Component {
       });
       for (let j = 0; j < _comments.length; j++) {
         //TODO
-        if (_comments[j].attrs.username !== userSession.loadUserData().username) {
+        if (
+          _comments[j].attrs.username !== userSession.loadUserData().username
+        ) {
           const _noti = new Notification({
             text: "comment",
             konfessionId: _comments[j].attrs.konfessionId,
@@ -81,6 +85,27 @@ export default class NotificationButton extends Component {
     //make self-notification model
     //
   }
+  async onClickConfession(noti) {
+    if (!noti.checked) {
+      noti.update({
+        checked: true
+      });
+      await noti.save();
+    }
+    await this.props.history.push(`/c/${noti.attrs.konfessionId}`);
+  }
+  async deleteNoti(noti) {
+    try {
+      await noti.destroy();
+      let _notifcations = this.state.notifcations;
+      _notifcations = _notifcations.filter(_noti => _noti !== noti);
+      await this.setState({
+        notifcations: _notifcations
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   render() {
     return (
       <div className="nav-link">
@@ -95,21 +120,38 @@ export default class NotificationButton extends Component {
           >
             <i className="fas fa-bell fa-2x ikonfess-dark"></i>
           </button>
-          <div className={'notification-wrapper dropdown-menu ' + (this.state.notiOpen ? 'show' : '')}>
+          <div
+            className={
+              "notification-wrapper dropdown-menu " +
+              (this.state.notiOpen ? "show" : "")
+            }
+          >
             {this.state.notifcations.length > 0 ? (
               this.state.notifcations.map(noti => {
                 return (
-                  <Link to={`/confession/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
+                  // <Link to={`/c/${noti.attrs.konfessionId}`} key={noti.attrs._id}>
 
-                  <div className="dropdown-item noti-unread" >
-                    You have a new <b>{noti.attrs.text}</b> at confession "
-                    <i>{noti.attrs.konfessionPreview}...</i>" &nbsp;
-                    <small>
-                      {TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}
-                    </small>
+                  <div
+                    className={
+                      "dropdown-item notis " +
+                      (noti.attrs.checked ? "noti-read" : "noti-unread")
+                    }
+                  >
+                    <div
+                      className="noti-trash"
+                      onClick={this.deleteNoti.bind(this, noti)}
+                    >
+                      <i className="far fa-trash-alt"></i>
+                    </div>
+                    <div onClick={this.onClickConfession.bind(this, noti)}>
+                      You have a new <b>{noti.attrs.text}</b> at confession "
+                      <i>{noti.attrs.konfessionPreview}...</i>" &nbsp;
+                      <small>
+                        {TimeStamp.convertDate(noti.attrs.madeAt).toLowerCase()}
+                      </small>
+                    </div>
                   </div>
-                  </Link>
-
+                  // </Link>
                 );
               })
             ) : (
@@ -121,3 +163,4 @@ export default class NotificationButton extends Component {
     );
   }
 }
+export default withRouter(NotificationButton);

@@ -13,7 +13,10 @@ export default class KonfessionFeed extends Component {
     this.state = {
       isLoading: true,
       allKonfessions: [],
-      decrypt: true //default as true, decrypt=false when user not logged in
+      decrypt: true, //default as true, decrypt=false when user not logged in
+      latitude : '',
+      longitude : ''
+
     };
   }
 
@@ -91,12 +94,31 @@ export default class KonfessionFeed extends Component {
     return _konf;
   }
 
+  setLatLong(lat,long){
+    console.log(lat,long)
+    this.setState({
+      latitude : lat,
+      longitude : long
+    })
+  }
+
   render() {
     const { userSession } = this.props;
-
+    const {latitude, longitude} = this.state;
+    const konfessions = this.state.allKonfessions
+    .filter(konfession => (konfession !== undefined) 
+    && (latitude === '' || (konfession.attrs.latitude && konfession.attrs.latitude <= latitude))
+    && (longitude === '' || (konfession.attrs.longitude && konfession.attrs.longitude <= longitude)))
+    .map((konfession, index) => {
+      return <KonfessionCard 
+      key={konfession.attrs._id}
+      konfession = {konfession}
+      userSession={this.props.userSession}/>
+    });
+    
     return (
-      <React.Fragment>
-        <DistanceFilter/>
+     <React.Fragment>
+        <DistanceFilter setLatLong={this.setLatLong.bind(this)}/>
           {userSession.isUserSignedIn() && !this.props.match && (
             <NewKonfession
               userSession={this.props.userSession}
@@ -105,20 +127,14 @@ export default class KonfessionFeed extends Component {
           )}
           {!this.state.isLoading && this.state.allKonfessions.length !== 0 ? (
             <div className="confession-feed">
-              {this.state.allKonfessions.map(konfession => {
+              {konfessions}
+              {/* {this.state.allKonfessions.map(konfession => {
                 return (
                   <KonfessionCard konfession = {konfession}
                   userSession={this.props.userSession}/>
-                  // <SingleKonfession
-                  //   key={konfession.attrs._id}
-                  //   konfession={konfession}
-                  //   userSession={this.props.userSession}
-                  //   fetchKonfessions={this.fetchKonfessions.bind(this)}
-                  //   openModal={this.props.openModal}
-                  // />
+                  
                 );
-              })}
-              <div style={{ width: "100%" }}></div>
+              })} */}
             </div>
           ) : !this.state.isLoading ? (
             <div>

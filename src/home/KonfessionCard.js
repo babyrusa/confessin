@@ -3,12 +3,12 @@ import Konfession from "../models/Konfession";
 import TimeStamp from "../shared/timestamp.js";
 import { Dot } from "react-animated-dots";
 import KonfessionHashtag from "../konfession/KonfessionHashtag";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import KonfessionCardReaction from "./KonfessionCardReaction";
 import { MapPin } from "react-feather";
 import Distance from "../shared/distance";
 
-export default class KonfessionCard extends Component {
+class KonfessionCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,26 +28,44 @@ export default class KonfessionCard extends Component {
     };
   }
   componentDidMount(){
-    this.getLatLong();
+    // this.getLatLong();
   }
   componentDidUpdate(prevProps){
     if(prevProps.konfession !== this.props.konfession){
-      this.getLatLong();
+      // this.getLatLong();
     }
   }
   getLatLong(){
     const { konfession } = this.props;
     if (konfession.attrs.latitude && konfession.attrs.longitude){
       const {latitude , longitude} = Distance.getLatLonFromDistance(konfession.attrs.latitude , konfession.attrs.longitude, 1);
-      console.log(konfession.attrs.latitude , konfession.attrs.longitude , latitude, longitude);
     }
+  }
+  onGoToPost(){
+    const { konfession } = this.props;
+    this.props.history.push(`/c/${konfession.attrs._id}`);
+  }
+  renderWithHashtags(){
+    const { konfession } = this.props;
+
+    const regex = /\#\w+\b/g;
+    let text = konfession.attrs.text;
+    let hashtags = text.match(regex);
+    let parts = text.split(regex) // re is a matching regular expression
+    let toReturn = JSON.parse(JSON.stringify(parts));
+    for (let i = 0; i < (parts.length-1); i++) {
+        toReturn.splice(i+1,0,<Link to={'/hashtag/' + hashtags[i].replace("#",'')}
+      className="hashtag">{hashtags[i]}</Link>)
+      // parts[i] = <Link to={'/hashtag/' + hashtags[i].replace("#",'')}>{hashtags[i]}</Link>
+    }
+    return toReturn;
   }
   render() {
     const { konfession } = this.props;
     const length = konfession.attrs.text.length;
     return (
-      // <div className="confession-card">
-      <Link to={`/c/${konfession.attrs._id}`} className="confession-card">
+      <div className="confession-card">
+        {/* <Link to={`/c/${konfession.attrs._id}`} className="confession-card"> */}
         <span className="confession-index">
           {konfession.attrs.index}
           &#46;
@@ -65,7 +83,8 @@ export default class KonfessionCard extends Component {
               : ""}
           </small>
         </div>
-        <div className="confession-body">
+        <Link to={`/c/${konfession.attrs._id}`} className="confession-body">
+        {/* <div className="confession-body" onClick={this.onGoToPost.bind(this)}> */}
           <div>
             <i className="fas fa-quote-left"></i>
             <h3
@@ -74,22 +93,23 @@ export default class KonfessionCard extends Component {
                 fontWeight: "bold"
               }}
             >
-              {konfession.attrs.text}
+              {this.renderWithHashtags()}
+
             </h3>
             <i className="fas fa-quote-right"></i>
           </div>
-          <KonfessionHashtag
-            konfession={konfession}
-            userSession={this.props.userSession}
-          />
-          <KonfessionCardReaction
+        {/* </div> */}
+        </Link>
+        <div className="confession-bottom">
+        <KonfessionCardReaction
             konfession={konfession}
             userSession={this.props.userSession}
             // openModal={this.props.openModal}
           />
         </div>
-      </Link>
-      // </div>
+        {/* </Link> */}
+      </div>
     );
   }
 }
+export default withRouter(KonfessionCard);
