@@ -7,7 +7,7 @@ import "@webscopeio/react-textarea-autocomplete/style.css";
 import Hashtag from "../models/Hashtag";
 import CreatableSelect from "react-select/creatable";
 import AsyncCreatableSelect from "react-select/async-creatable";
-import { Edit3 } from "react-feather";
+import { Edit3, MapPin } from "react-feather";
 
 export default class NewKonfession extends Component {
   constructor(props) {
@@ -80,7 +80,6 @@ export default class NewKonfession extends Component {
 
   async createKonfessionWithLocation(location) {
     if (this.state.confession.trim() !== "") {
-      
       this.setState({ isButtonLoading: true });
       const { userSession } = this.props;
       const totalConf = await Konfession.fetchList(
@@ -98,7 +97,7 @@ export default class NewKonfession extends Component {
         });
         await konfession.save();
         await this.handleHashtags(konfession);
-        
+
         this.setState({
           confession: "",
           isButtonLoading: false,
@@ -129,7 +128,7 @@ export default class NewKonfession extends Component {
         });
         await konfession.save();
         await this.handleHashtags(konfession);
-        
+
         this.setState({
           confession: "",
           isButtonLoading: false,
@@ -144,7 +143,7 @@ export default class NewKonfession extends Component {
     }
   }
 
-  async handleHashtags(konfession){
+  async handleHashtags(konfession) {
     const hashtags = this.state.confession.match(/\#\w+\b/g);
     let addedHashtag = [];
     if (hashtags) {
@@ -174,7 +173,10 @@ export default class NewKonfession extends Component {
       <React.Fragment>
         {/* <div className="col-md-10 col-lg-10 col-xl-6 mx-auto"> */}
         <button
-          className="btn btn-light newconfession-butt"
+          className={
+            "btn btn-light newconfession-butt " +
+            (this.state.showInput ? "newconfession-butt-selected" : "")
+          }
           data-toggle="tooltip"
           title="Spill some tea"
           onClick={this.onShowInput.bind(this)}
@@ -192,17 +194,23 @@ export default class NewKonfession extends Component {
                 onChange={this.onConfessionChange.bind(this)}
                 placeholder="Spill some tea. Don't worry, no one knows your identity but you!"
               ></textarea>
-              <label className="switch">
-                Location
-                <input
-                  type="checkbox"
-                  checked={this.state.setLocation}
-                  onChange={e => this.onSetLocation(e)}
-                  data-checked="On"
-                  data-unchecked="Off"
-                />
-                <span className="slider round"></span>
-              </label>
+              <div className="location-switch-wrapper" >
+                <label className="switch" data-toggle="tooltip" title="Set location for this post">
+                  <input
+                    type="checkbox"
+                    checked={this.state.setLocation}
+                    onChange={e => this.onSetLocation(e)}
+                    data-checked="On"
+                    data-unchecked="Off"
+                  />
+                  <span className="slider round"></span>
+                  <div id="on">on</div>
+                  <div id="off">off</div>
+                </label>
+                {/* <div style={{paddingLeft : '10px'}}>
+                  Location Detector: {this.state.setLocation ? "on" : "off"}
+                </div> */}
+              </div>
             </div>
             {/* <AsyncCreatableSelect
             isMulti

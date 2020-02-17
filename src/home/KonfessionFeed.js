@@ -95,7 +95,6 @@ export default class KonfessionFeed extends Component {
   }
 
   setLatLong(lat,long){
-    console.log(lat,long)
     this.setState({
       latitude : lat,
       longitude : long

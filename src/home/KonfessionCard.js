@@ -66,9 +66,6 @@ class KonfessionCard extends Component {
   }
   getDistance(location){
     const { konfession } = this.props;
-    console.log(location.coords.latitude,
-      location.coords.longitude,
-      location.coords.accuracy)
     const d = Distance.getDistanceFromLatLonInKm(
       location.coords.latitude,
       location.coords.longitude,
@@ -111,9 +108,9 @@ class KonfessionCard extends Component {
           &#46;
         </span>
         <div className="confession-top">
-          {konfession.attrs.latitude && konfession.attrs.longitude && <small data-toggle="tooltip" title="Location set" className="card-location">
+          {konfession.attrs.latitude && konfession.attrs.longitude && <small data-toggle="tooltip" title="Post Has Location" className="card-location">
             <MapPin/>
-            {this.state.distance}
+            {/* {this.state.distance} */}
           </small>}
           <small style={{ padding: "5px" }}>
             {TimeStamp.convertDate(konfession.attrs.createdAt).toUpperCase()}

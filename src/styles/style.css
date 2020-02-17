@@ -8,6 +8,7 @@ body {
   --fourth : #fdebee;
   --text : #504658;
   --hot: #ff66b6;
+  --black: #212529;
   font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
   height: 100%;
   background-color: var(--main);
@@ -221,7 +222,7 @@ textarea {
 .newconfession-butt{
   z-index: 1;
   right: 0;
-  position: absolute;
+  position: fixed;
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -230,15 +231,21 @@ textarea {
   align-items: center;
   padding : 10px;
 }
+.newconfession-butt-selected{
+  background-color: var(--hot) !important;
+  border-color: var(--hot) !important;
+  color: #f8f9fa !important;
+}
 #newconfession-wrapper {
   /* border-radius: 10px; */
   width: 50%;
   z-index: 1;
   top: 70px;
   right: 70px;
-  position: absolute;
+  position: fixed;
   /* background-color: rgba(255, 255, 255, 1); */
 }
+
 #add-confession-button {
   /* width: 100%; */
   /* width: 50px; */
@@ -471,6 +478,13 @@ a:hover{
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  padding: 5px;
+}
+.btn-social{
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  
 }
 .btn-reaction {
   background-color: white;
@@ -507,14 +521,17 @@ background-color: none;
 .distance-filter-wrapper{
   display: flex;
   flex-direction: row-reverse;
-  justify-items: right;
+  /* justify-items: right; */
+  align-items: center;
+  padding-right: 20px;
+  padding-bottom: 10px;
 }
 .distance-filter{
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   align-items: center;
   animation: slide-right 0.5s ease;
-
+  margin: 0px 50px;
   /* visibility: show;
       opacity: 0.9;
     
@@ -532,6 +549,12 @@ background-color: none;
 }
 .selected-unit{
   border-bottom: 1px solid var(--hot);
+}
+.unit-selection{
+  padding: 0px 5px;
+}
+.unit{
+  cursor: pointer;
 }
 /*--------- search input  --------- */
 #filter-wrapper{
@@ -594,7 +617,7 @@ background-color: none;
   height: 0;
 }
 .slider:active:before {
-	width: 100px;
+	width: 50px;
 }
 .slider {
   position: absolute;
@@ -606,11 +629,14 @@ background-color: none;
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
+  border-radius: 290px;
+  transition: 0.4s ease left, 0.4s ease background-position;
+  z-index: 2;
 }
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: "📍";
   height: 26px;
   width: 26px;
   left: 4px;
@@ -629,11 +655,30 @@ input:focus + .slider {
   box-shadow: 0 0 1px var(--hot);
 }
 
+#on, #off {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  margin-left: 5px;
+}
+#off {
+  margin-left: 33px;
+  z-index: 2;
+}
+
 input:checked + .slider:before {
   /* left: calc(100% - 56px); */
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+input:checked ~ #off{
+  z-index: 0 !important;
+}
+input:checked ~ #on{
+  /* z-index: 0 !important; */
+  z-index: 2;
 }
 
 /* Rounded sliders */
@@ -644,6 +689,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+/* .location-switch-wrapper{
+  background-color: var(--secondary);
+  display: flex;
+  flex-direction: row;
+} */
 
 /*--------- MOBILE  --------- */
 

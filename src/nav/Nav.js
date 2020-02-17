@@ -88,7 +88,7 @@ export default class Nav extends Component {
                     <Link to="/profile" className="dropdown-item" href="#">
                       <i className="fas fa-user ikonfess"></i>&nbsp;Profile
                     </Link>
-                    {/* <Link to="/contact-us" className="dropdown-item" ><i className="fas fa-envelope text-primary"></i>&nbsp;Contact Us</Link> */}
+                    <Link to="/contact-us" className="dropdown-item" ><i className="fas fa-envelope ikonfess"></i>&nbsp;Contact Us</Link>
                     {/* <Link to="/about-dcasso"><small className="dropdown-item">About Dcasso</small></Link> */}
                     <div className="dropdown-divider"></div>
                     <a
