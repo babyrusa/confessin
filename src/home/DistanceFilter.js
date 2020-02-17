@@ -5,7 +5,7 @@ import { Sliders } from "react-feather";
 
 const customStyles = {
   option: (provided, state) => ({
-    ...provided,
+    ...provided
     // borderBottom: '1px dotted pink',
     // color: state.isSelected ? 'red' : 'blue',
     // padding: 20,
@@ -15,7 +15,7 @@ const customStyles = {
     ...provided,
     // borderBottom: '1px dotted pink',
     padding: 20,
-    width: 200,
+    width: 200
   }),
   control: (provided, state) => ({
     // none of react-select's styles are passed to <Control />
@@ -48,7 +48,8 @@ export default class DistanceFilter extends Component {
     this.state = {
       distance: 0,
       showFilter: false,
-      selectedUnit: 'km'
+      selectedUnit: "km",
+      accuracy: "unknown"
     };
   }
   handleChange(newValue: any, actionMeta: any) {
@@ -74,6 +75,20 @@ export default class DistanceFilter extends Component {
     }
   }
   setLatLong(location) {
+    console.log(location.coords.accuracy);
+    if (location.coords.accuracy < 500) {
+      this.setState({
+        accuracy: "excellent"
+      });
+    } else if (location.coords.accuracy < 1000) {
+      this.setState({
+        accuracy: "good"
+      });
+    } else {
+      this.setState({
+        accuracy: "bad"
+      });
+    }
     if (this.state.selectedUnit === "km") {
       const { latitude, longitude } = Distance.getLatLonFromDistanceKm(
         location.coords.latitude,
@@ -81,7 +96,7 @@ export default class DistanceFilter extends Component {
         this.state.distance
       );
       this.props.setLatLong(latitude, longitude);
-    } else if (this.state.selectedUnit === "mi"){
+    } else if (this.state.selectedUnit === "mi") {
       const { latitude, longitude } = Distance.getLatLonFromDistanceMi(
         location.coords.latitude,
         location.coords.longitude,
@@ -95,10 +110,10 @@ export default class DistanceFilter extends Component {
       showFilter: !this.state.showFilter
     });
   }
-  selectUnit(unit){
+  selectUnit(unit) {
     this.setState({
-      selectedUnit : unit
-    })
+      selectedUnit: unit
+    });
   }
   render() {
     return (
@@ -106,32 +121,52 @@ export default class DistanceFilter extends Component {
         <span
           className="filter-butt"
           onClick={this.onShowDistanceFilter.bind(this)}
+          data-toggle="tooltip"
+          title="Distance Filter"
         >
           <Sliders />
         </span>
 
         {this.state.showFilter && (
           <div className="distance-filter">
-            {/* Location detector accuracy : Good */}
-            <div className="unit-selection">
-            <span className={"unit " + (this.state.selectedUnit === "km" ? "selected-unit" : "")}
-            onClick={this.selectUnit.bind(this,"km")}
-            data-toggle="tooltip" title="kilometers">
-              km</span>
-            <span>&nbsp;|&nbsp;</span>
-            <span className={"unit " + (this.state.selectedUnit === "mi" ? "selected-unit" : "")}
-            onClick={this.selectUnit.bind(this,"mi")}
-            data-toggle="tooltip" title="miles">
-              mi</span>
+            <div style={{ display: "flex", flexDirection: "row", alignItems : "center" }}>
+              <CreatableSelect
+                styles={customStyles}
+                isClearable
+                onChange={this.handleChange.bind(this)}
+                onInputChange={this.handleInputChange.bind(this)}
+                options={this.distance}
+                placeholder="Filter distance"
+              />
+              <div className="unit-selection">
+                <span
+                  className={
+                    "unit " +
+                    (this.state.selectedUnit === "km" ? "selected-unit" : "")
+                  }
+                  onClick={this.selectUnit.bind(this, "km")}
+                  data-toggle="tooltip"
+                  title="kilometers"
+                >
+                  km
+                </span>
+                <span>&nbsp;|&nbsp;</span>
+                <span
+                  className={
+                    "unit " +
+                    (this.state.selectedUnit === "mi" ? "selected-unit" : "")
+                  }
+                  onClick={this.selectUnit.bind(this, "mi")}
+                  data-toggle="tooltip"
+                  title="miles"
+                >
+                  mi
+                </span>
+              </div>
             </div>
-            <CreatableSelect
-              styles={customStyles}
-              isClearable
-              onChange={this.handleChange.bind(this)}
-              onInputChange={this.handleInputChange.bind(this)}
-              options={this.distance}
-              placeholder="Filter distance"
-            />
+            <div>
+              <small>Location detector accuracy : {this.state.accuracy}</small>
+            </div>
           </div>
         )}
       </div>

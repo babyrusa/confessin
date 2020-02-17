@@ -30,12 +30,12 @@ class KonfessionCard extends Component {
   }
   componentDidMount(){
     // this.getLatLong();
-    this.getLocation();
+    // this.getLocation();
   }
   componentDidUpdate(prevProps){
     if(prevProps.konfession !== this.props.konfession){
       // this.getLatLong();
-      this.getLocation();
+      // this.getLocation();
 
     }
   }

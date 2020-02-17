@@ -521,14 +521,13 @@ background-color: none;
 .distance-filter-wrapper{
   display: flex;
   flex-direction: row-reverse;
-  /* justify-items: right; */
   align-items: center;
   padding-right: 20px;
   padding-bottom: 10px;
 }
 .distance-filter{
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
   animation: slide-right 0.5s ease;
   margin: 0px 50px;
@@ -713,6 +712,9 @@ input:checked ~ #on{
 @media (max-width: 600px) {
   .confession-card{
     width : 100%;
+  }
+  .distance-filter{
+    flex-direction: column;
   }
 }
 
