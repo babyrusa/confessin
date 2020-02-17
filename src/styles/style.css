@@ -503,6 +503,36 @@ background-color: none;
   font-size: x-small;
   color: var(--hot);
 }
+/*--------- distance filter  --------- */
+.distance-filter-wrapper{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-items: right;
+}
+.distance-filter{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  animation: slide-right 0.5s ease;
+
+  /* visibility: show;
+      opacity: 0.9;
+    
+      transition: visibility 0s linear 0.33s, opacity 0.33s linear; */
+}
+@keyframes slide-right {
+  0% {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(10px);
+  }
+}
+.selected-unit{
+  border-bottom: 1px solid var(--hot);
+}
 /*--------- search input  --------- */
 #filter-wrapper{
   position: relative;

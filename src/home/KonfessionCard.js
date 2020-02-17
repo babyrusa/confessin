@@ -24,22 +24,62 @@ class KonfessionCard extends Component {
           index: 0
         }
       },
-      editedKonfession: ""
+      editedKonfession: "",
+      distance : 0
     };
   }
   componentDidMount(){
     // this.getLatLong();
+    this.getLocation();
   }
   componentDidUpdate(prevProps){
     if(prevProps.konfession !== this.props.konfession){
       // this.getLatLong();
+      this.getLocation();
+
     }
+  }
+  getLocation(){
+    if (navigator.geolocation) {
+      const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+      navigator.geolocation.getCurrentPosition(
+        this.getDistance.bind(this),
+        this.error,
+        options
+      );
+    } else {
+      alert("Unable to get your location");
+    }
+  }
+  error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
   }
   getLatLong(){
     const { konfession } = this.props;
     if (konfession.attrs.latitude && konfession.attrs.longitude){
       const {latitude , longitude} = Distance.getLatLonFromDistance(konfession.attrs.latitude , konfession.attrs.longitude, 1);
     }
+  }
+  getDistance(location){
+    const { konfession } = this.props;
+    console.log(location.coords.latitude,
+      location.coords.longitude,
+      location.coords.accuracy)
+    const d = Distance.getDistanceFromLatLonInKm(
+      location.coords.latitude,
+      location.coords.longitude,
+      konfession.attrs.latitude,
+      konfession.attrs.longitude
+      )
+    this.setState({
+      distance : d
+    })
+    // console.log(d)
+    // return d;
   }
   onGoToPost(){
     const { konfession } = this.props;
@@ -73,6 +113,7 @@ class KonfessionCard extends Component {
         <div className="confession-top">
           {konfession.attrs.latitude && konfession.attrs.longitude && <small data-toggle="tooltip" title="Location set" className="card-location">
             <MapPin/>
+            {this.state.distance}
           </small>}
           <small style={{ padding: "5px" }}>
             {TimeStamp.convertDate(konfession.attrs.createdAt).toUpperCase()}

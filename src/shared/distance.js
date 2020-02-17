@@ -1,8 +1,8 @@
 export default class Distance {
   static getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     let R = 6378; // Radius of the earth in km
-    let dLat = this.deg2rad(lat2-lat1);  // deg2rad below
-    let dLon = this.deg2rad(lon2-lon1); 
+    let dLat = this.deg2rad(Math.abs(lat2-lat1));  // deg2rad below
+    let dLon = this.deg2rad(Math.abs(lon2-lon1)); 
     let a = 
       Math.sin(dLat/2) * Math.sin(dLat/2) +
       Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * 
